@@ -2,7 +2,10 @@
 title: "Bio381 Homepage"
 author: "Melanie"
 date: "January 18, 2017"
-output: html_document
+output: 
+  html_document: 
+    highlight: tango
+    theme: united
 ---
 
 # Melanie Kazenel
