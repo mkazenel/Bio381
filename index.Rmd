@@ -1,0 +1,34 @@
+---
+title: "Bio381 Homepage"
+author: "Melanie"
+date: "January 18, 2017"
+output: html_document
+---
+
+# Melanie Kazenel
+
+## Computational Biology
+
+### This is how you make headings
+
+Lists:
+
+* [Assignment 1](Test.html)   
+* [Assignment 2](https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf)   
+* [Assignment 3](http://www.uvm.edu/)
+
+![Picture](FrogPhoto.jpg)
+
+![Same picture directly from webpage](https://fuzfeed.com/wp-content/uploads/2015/03/cb00096115369e16f749c4ae4ddcf5c1-e1426760205857-640x451.jpg)
+
+#This is a test comment
+car+dog
+
+```{r}
+#test comment
+car <- 2
+dog <- 3
+car+dog
+```
+
+
