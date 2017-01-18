@@ -13,7 +13,6 @@ output: html_document
 
 Lists:
 
-* [Assignment 1](Test.html)   
 * [Assignment 2](https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf)   
 * [Assignment 3](http://www.uvm.edu/)
 
