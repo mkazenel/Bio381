@@ -12,7 +12,7 @@ output:
 
 ##Assignments
 
-* [Assignment 1](http://www.uvm.edu/)   
+* Assignment 1   
 * Assignment 2   
 * Assignment 3   
 
