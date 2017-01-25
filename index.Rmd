@@ -3,9 +3,9 @@ title: "Computational Biology (Bio381) Homepage"
 author: "Melanie Kazenel"
 date: "Spring 2017"
 output: 
-  html_document: 
-    highlight: tango
-    theme: united
+  prettydoc::html_pretty:
+    theme: hpstr
+    highlight: github
 ---
 
 ![Mountain image](IMG_1224.jpg)
