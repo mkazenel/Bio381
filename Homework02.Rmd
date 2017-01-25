@@ -1,0 +1,16 @@
+---
+title: "Homework 2"
+author: "Melanie Kazenel"
+date: "January 25, 2017"
+output: html_document
+---
+
+Tool 1: Path Diagram
+
+![](PathDiagram.jpg)
+
+Tool 2:
+
+Tool 3:
+
+Tool 4:

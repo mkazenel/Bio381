@@ -1,5 +1,5 @@
 ---
-title: "Computational Biology (Bio381) Homepage"
+title: "Computational Biology (BIO 381) Homepage"
 author: "Melanie Kazenel"
 date: "Spring 2017"
 output: 
@@ -13,12 +13,14 @@ output:
 ##Assignments
 
 * Assignment 1   
-* Assignment 2   
+* [Assignment 2](Homework02.html)  
 * Assignment 3   
 
 ##Other Links
 
-[Personal Webpage](https://www.uvm.edu/~biology/?Page=students/kazenel_000.php&SM=facultysubmenu.html)
+[BIO 381 Course Webpage](https://gotellilab.github.io/Bio381/)
 
-[R Markdown Cheat Sheet](https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf) 
+[Lauren's BIO 381 Webpage](https://lvash.github.io/Bio381/) 
+
+[R Markdown Cheat Sheet](https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf)
 
