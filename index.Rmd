@@ -4,7 +4,7 @@ author: "Melanie Kazenel"
 date: "Spring 2017"
 output: 
   prettydoc::html_pretty:
-    theme: hpstr
+    theme: leonids
     highlight: github
 ---
 
