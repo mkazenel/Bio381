@@ -8,7 +8,7 @@ output:
     highlight: github
 ---
 
-![Mountain image](IMG_1224.jpg)
+![](IMG_1224.jpg)
 
 ##Assignments
 

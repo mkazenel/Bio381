@@ -1,16 +1,28 @@
 ---
-title: "Homework 2"
+title: "Assignment 2"
 author: "Melanie Kazenel"
 date: "January 25, 2017"
-output: html_document
+output: 
+  prettydoc::html_pretty:
+    theme: leonids
+    highlight: github
 ---
 
-Tool 1: Path Diagram
+####Tool 1: Path Diagram
 
-![](PathDiagram.jpg)
+![](PathDiagram2.jpg)
 
-Tool 2:
+####Tool 2: More Interesting Null Hypothesis
 
-Tool 3:
+![](MINH.jpg)
 
-Tool 4:
+####Tool 3: Lookup Table
+
+![](LookupTable.jpg)
+
+####Tool 4: Logic Tree
+
+![](LogicTree.jpg)
+
+
+
