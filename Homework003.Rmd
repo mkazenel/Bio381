@@ -1,0 +1,20 @@
+---
+title: "Assignment 3"
+author: "Melanie Kazenel"
+date: "February 1, 2017"
+output: 
+  prettydoc::html_pretty:
+    theme: leonids
+    highlight: github
+---
+
+####Typora Path Diagram
+[Path Diagram](PathDiagram_Typora.html)
+
+####Original PowerPoint Presentation
+[Original PowerPoint](OriginalPowerpoint.pdf)
+
+####Beamer Presentation - .Rmd File
+
+####Beamer Presentation - PDF
+

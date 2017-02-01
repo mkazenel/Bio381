@@ -14,7 +14,7 @@ output:
 
 * Assignment 1   
 * [Assignment 2](Homework02.html)  
-* Assignment 3   
+* [Assignment 3](Homework003.html)   
 
 ##Other Links
 

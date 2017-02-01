@@ -1,0 +1,72 @@
+---
+output: 
+  beamer_presentation: 
+    incremental: yes
+---
+##
+Potential for climate-induced disruption of plant-fungal symbioses in the Rocky Mountains     
+Melanie Kazenel     
+7 April 2016     
+
+##
+ \begin{picture}(320,250)
+ \put(40,50){\includegraphics[height=6cm]{/Users/mkazenel/Desktop/Bio381/Images/Mountain2.jpg}}
+ \put(25,20){\begin{minipage}[t]{1\linewidth}
+ {How will climate change alter plant-symbiont interactions?}
+ \end{minipage}}
+ \end{picture}
+ 
+ ## Plants and Fungal Symbionts
+ 
+ \begin{picture}(320,250)
+ \put(25,35){\includegraphics[height=6cm]{/Users/mkazenel/Desktop/Bio381/Images/Symbionts.jpg}}
+ \put(25,20){\begin{minipage}[t]{1\linewidth}
+ {}
+ \end{minipage}}
+ \end{picture}
+ 
+ ## Symbionts can mediate plant responses to climate change
+ 
+  \begin{picture}(320,250)
+ \put(-12,100){\includegraphics[height=3cm]{/Users/mkazenel/Desktop/Bio381/Images/AJB.jpg}}
+ \put(0,70){\begin{minipage}[t]{1\linewidth}
+ {Symbionts altered plant responses to drought, N deposition, and warming}
+ \end{minipage}}
+ \end{picture}
+ 
+ ## Climate change may disrupt symbioses as organisms experience range shifts
+ 
+   \begin{picture}(320,250)
+ \put(-12,30){\includegraphics[height=7cm]{/Users/mkazenel/Desktop/Bio381/Images/RangeShifts.jpg}}
+ \put(0,70){\begin{minipage}[t]{1\linewidth}
+ {}
+ \end{minipage}}
+ \end{picture}
+ 
+ ## Mechanisms for disruption of plant-symbiont interactions
+\bigskip
+\bigskip
+\bigskip
+Plants and symbionts may have different:   
+
+- Physiological tolerances   
+- Dispersal rates   
+- Phenological responses 
+
+ \begin{picture}(320,250)
+ \put(190,110){\includegraphics[height=7cm]{/Users/mkazenel/Desktop/Bio381/Images/Phenology.jpg}}
+ \put(00,50){\begin{minipage}[t]{1\linewidth}
+ \end{minipage}}
+ \end{picture}
+
+## Study System
+\noindent\hspace{2in}Mountains     
+\noindent\hspace{2in}- ~25% of land area on Earth     
+\noindent\hspace{2in}- 50% of the human water supply    
+\noindent\hspace{2in}- 1/3 of terrestrial plant diversity    
+\noindent\hspace{2in}Grasses    
+\noindent\hspace{2in}- Cover 1/3 of land area (>10,000 species)    
+\noindent\hspace{2in}- Provide the majority of food for humans and domesticated animals    
+\noindent\hspace{2in}- All have mycorrhizal fungi in roots and fungi in leaves    
+
+
