@@ -1,0 +1,230 @@
+---
+title: 'Assignment #4'
+author: "Melanie Kazenel"
+date: "February 8, 2017"
+output: 
+  prettydoc::html_pretty:
+    theme: leonids
+    highlight: github
+---
+
+#(1) Creating a .csv file in Excel
+
+###Read in the data
+
+```{r}
+z <- read.table("Data.csv", header = TRUE, sep=",", stringsAsFactors=FALSE)
+
+```
+
+###Check the data for errors
+
+####str() 
+```{r}
+str(z)
+```
+
+####summary()
+```{r}
+summary(z)
+```
+
+####table()
+```{r}
+table(z$Sample)
+table(z$Plot)
+table(z$WarmingTreatment)
+table(z$HostSpecies)
+table(z$TissueType)
+table(z$CollectionDate)
+```
+
+####head()
+```{r}
+head(z)
+```
+
+####tail()
+```{r}
+tail(z)
+```
+
+
+#(2) Working with Regular Expressions
+
+##Question 1
+
+I took this:
+
+```
+First String    Second      1.22      3.4
+Second          More Text   1.555555  2.2220
+Third           x           3         124
+```
+
+And transformed it to this:
+
+```
+First String,Second,1.22,3.4
+Second,More Text,1.555555,2.2220
+Third,x,3,124
+```
+
+By searching for this:
+```
+\s{2,}
+```
+
+And replacing it with this:
+```
+,
+````
+
+##Question 2
+
+I took this:
+
+```
+Ballif, Bryan, University of Vermont
+Ellison, Aaron, Harvard Forest
+Record, Sydne, Bryn Mawr
+```
+
+And transformed it to this:
+
+```
+Bryan Ballif (University of Vermont)
+Aaron Ellison (Harvard Forest)
+Sydne Record (Bryn Mawr)
+```
+
+By searching for this:
+```
+(\w+), (\w+), (.+)
+```
+
+And replacing it with this:
+```
+\2 \1 (\3)
+```
+
+##Question 3
+
+###Part 1
+
+I took this:
+
+```
+0001 Georgia Horseshoe.mp3 0002 Billy In The Lowground.mp3 0003 Cherokee Shuffle.mp3 0004 Walking Cane.mp3
+```
+
+And transformed it to this:
+
+```
+0001 Georgia Horseshoe.mp3 
+0002 Billy In The Lowground.mp3 
+0003 Cherokee Shuffle.mp3 
+0004 Walking Cane.mp3
+```
+
+By searching for this:
+```
+mp3 
+```
+
+And replacing it with this:
+```
+mp3 \n
+```
+
+###Part 2
+
+I took this:
+
+```
+0001 Georgia Horseshoe.mp3 
+0002 Billy In The Lowground.mp3 
+0003 Cherokee Shuffle.mp3 
+0004 Walking Cane.mp3
+```
+
+And transformed it to this:
+
+```
+Georgia Horseshoe_0001.mp3 
+Billy In The Lowground_0002.mp3 
+Cherokee Shuffle_0003.mp3 
+Walking Cane_0004.mp3
+```
+
+By searching for this:
+```
+(\d+) (.+)[.mp3]{4}
+```
+
+And replacing it with this:
+```
+\2_\1.mp3
+```
+
+##Question 4
+
+###Part 1
+
+I took this:
+
+```
+Camponotus,pennsylvanicus,10.2,44
+Camponotus,herculeanus,10.5,3
+Myrmica,punctiventris,12.2,4
+Lasius,neoniger,3.3,55
+```
+
+And transformed it to this:
+
+```
+C_pennsylvanicus,44
+C_herculeanus,3
+M_punctiventris,4
+L_neoniger,55
+```
+
+By searching for this:
+```
+(\w)(\w+),(\w+),(.+),(.+)
+```
+
+And replacing it with this:
+```
+\1_\3,\5
+```
+
+###Part 2
+
+I took this:
+
+```
+Camponotus,pennsylvanicus,10.2,44
+Camponotus,herculeanus,10.5,3
+Myrmica,punctiventris,12.2,4
+Lasius,neoniger,3.3,55
+```
+
+And transformed it to this:
+
+```
+C_penn,44
+C_herc,3
+M_punc,4
+L_neon,55
+```
+
+By searching for this:
+```
+(\w)(\w+),(\w{4})(\w+),(.+),(.+)
+```
+
+And replacing it with this:
+```
+\1_\3,\6
+```
