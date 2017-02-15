@@ -2,7 +2,10 @@
 title: "Assignment 5"
 author: "Melanie Kazenel"
 date: "February 15, 2017"
-output: html_document
+output: 
+  prettydoc::html_pretty:
+    theme: leonids
+    highlight: github
 ---
 
 1) Suppose x = 1.1, a = 2.2, and b = 3.3. Assign each expression to the value of the variable z and print the value stored in z.
