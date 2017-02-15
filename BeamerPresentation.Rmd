@@ -284,4 +284,144 @@ Rudgers et al. _Ecology_ (2014).
  {}
  \end{minipage}}
  \end{picture} 
+ 
+## Illumina Sequencing
+\bigskip
+\bigskip
+Paired-end sequencing of fungal nuclear ribosomal DNA using primers targeting:      
 
+- ITS2 region (for VTE, LFE, and DSE)     
+\bigskip
+- ~300bp in the 28S region (for AMF) (FLR3-FLR4 primers)   
+
+  \begin{picture}(320,250)
+ \put(-10,170){\includegraphics[height=2cm]{/Users/mkazenel/Desktop/Bio381/Images/ITS2_2.png}}
+ \put(50,280){\begin{minipage}[t]{1\linewidth}
+ {}
+ \end{minipage}}
+ \end{picture} 
+
+## Illumina Sequencing
+\bigskip
+\bigskip
+Paired-end sequencing of fungal nuclear ribosomal DNA using primers targeting:      
+
+>- ITS2 region (for VTE, LFE, and DSE)     
+\bigskip
+>- ~300bp in the 28S region (for AMF) (FLR3-FLR4 primers)      
+
+  \begin{picture}(320,250)
+ \put(-10,170){\includegraphics[height=2cm]{/Users/mkazenel/Desktop/Bio381/Images/ITS2_2.png}}
+ \put(50,280){\begin{minipage}[t]{1\linewidth}
+ {}
+ \end{minipage}}
+ \end{picture} 
+ 
+   \begin{picture}(320,250)
+ \put(0,505){\includegraphics[height=1cm]{/Users/mkazenel/Desktop/Bio381/Images/GreenBox3.png}}
+ \put(50,280){\begin{minipage}[t]{1\linewidth}
+ {}
+ \end{minipage}}
+ \end{picture} 
+
+## Bioinformatics
+- Quality filtering in QIIME     
+- Sumaclust to place similar sequences into operational taxonomic units (OTUs) at ~97% identity     
+- NCBI BLAST to assign taxonomy     
+- Discarded all OTUs with <97% identity to entry in database     
+- Normalized data using DESeq2     
+- Discarded singletons     
+\bigskip
+- Conducted analyses on 802 OTUs     
+
+## Analyses
+- NMDS: to visualize OTU composition     
+- perMANOVA: to test how variables of interest affect OTU composition     
+- Fixed effects: warming treatment, host species, sampling date    
+- Random effect: block (pair of plots)     
+- PERMDISP: to test for dispersion within groups     
+- Indicator species analysis (SIMPER): to identify OTUs that     contributed strongly to differences among groups     
+
+##
+\bigskip
+\bigskip
+\bigskip
+\bigskip
+\bigskip
+\bigskip
+Arbuscular     
+mycorrhizal      
+fungi
+  \begin{picture}(320,250)
+ \put(40,90){\includegraphics[height=7cm]{/Users/mkazenel/Desktop/Bio381/Images/WarmingAMFCol.png}}
+ \put(50,280){\begin{minipage}[t]{1\linewidth}
+ {}
+ \end{minipage}}
+ \end{picture} 
+ 
+## Results: All Species
+- OTU composition did not differ between warming treatments (df = 1, pseudo-F =  1.361, P = 0.1391)     
+- High stress value     
+- Spatial heterogeneity (significant effect of block)     
+
+  \begin{picture}(320,250)
+ \put(40,90){\includegraphics[height=5cm]{/Users/mkazenel/Desktop/Bio381/Images/NMDS1.png}}
+ \put(50,280){\begin{minipage}[t]{1\linewidth}
+ {}
+ \end{minipage}}
+ \end{picture} 
+
+##
+\bigskip
+
+- OTU composition differed between sampling dates (df = 1, pseudo-F = 2.9483, P = 0.0009) and among host species (df = 2, pseudo-F = 5.4469, P = 0.0001)     
+    - FT differed from AL and PP     
+    - Communities of AL and PP were significantly more dispersed relative to communities of FT (PERMDISP)     
+
+  \begin{picture}(320,250)
+ \put(40,90){\includegraphics[height=5cm]{/Users/mkazenel/Desktop/Bio381/Images/NMDS2.png}}
+ \put(50,280){\begin{minipage}[t]{1\linewidth}
+ {}
+ \end{minipage}}
+ \end{picture}
+ 
+## Changes in AMF colonization between June and September for all three grasses
+\bigskip
+\bigskip
+\bigskip
+\bigskip
+\bigskip
+\bigskip
+Arbuscular     
+mycorrhizal      
+fungi
+  \begin{picture}(320,250)
+ \put(40,130){\includegraphics[height=7cm]{/Users/mkazenel/Desktop/Bio381/Images/JuneSept.png}}
+ \put(50,280){\begin{minipage}[t]{1\linewidth}
+ {}
+ \end{minipage}}
+ \end{picture} 
+ 
+## Results: _A. lettermanii_
+  \begin{picture}(320,250)
+ \put(-20,50){\includegraphics[height=5cm]{/Users/mkazenel/Desktop/Bio381/Images/NMDS_3_4.png}}
+ \put(20,50){\begin{minipage}[t]{1\linewidth}
+ {All data \noindent\hspace{1.75in} Plot 10 data removed}
+ \end{minipage}}
+ \end{picture}
+ 
+##
+\bigskip
+
+- Sampling date affected OTU composition (df = 1, psuedo-F = 3.1274, P = 0.0024     
+- No difference in dispersion between two dates     
+- Grouping by plot     
+
+  \begin{picture}(320,250)
+ \put(40,70){\includegraphics[height=6cm]{/Users/mkazenel/Desktop/Bio381/Images/NMDS5.png}}
+ \put(50,280){\begin{minipage}[t]{1\linewidth}
+ {}
+ \end{minipage}}
+ \end{picture}
+ 
+\cite{Bascompte2007}
