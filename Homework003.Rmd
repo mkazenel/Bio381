@@ -9,12 +9,13 @@ output:
 ---
 
 ####Typora Path Diagram
-[Path Diagram](PathDiagram_Typora.html)
+[Link](PathDiagram_Typora.html)
 
 ####Original PowerPoint Presentation
-[Original PowerPoint](OriginalPowerpoint.pdf)
+[Link](OriginalPowerpoint.pdf)
 
 ####Beamer Presentation - .Rmd File
+[Link](BeamerPresentation.Rmd)
 
 ####Beamer Presentation - PDF
-
+[Link](BeamerPresentation.pdf)

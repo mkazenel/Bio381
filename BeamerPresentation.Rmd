@@ -1,6 +1,7 @@
 ---
 output: 
   beamer_presentation: 
+    colortheme: dolphin
     incremental: yes
 ---
 ##
@@ -8,11 +9,11 @@ output:
 \huge Potential for climate-induced disruption of plant-fungal symbioses in the Rocky Mountains     
 \bigskip
 \bigskip
-Melanie Kazenel     
-7 April 2016   
+\LARGE Melanie Kazenel     
+\LARGE 7 April 2016   
 
  \begin{picture}(320,250)
- \put(160,170){\includegraphics[height=4cm]{/Users/mkazenel/Desktop/Bio381/Images/Mountain1.jpg}}
+ \put(140,150){\includegraphics[height=4.5cm]{/Users/mkazenel/Desktop/Bio381/Images/Mountain1.jpg}}
  \put(00,50){\begin{minipage}[t]{1\linewidth}
  \end{minipage}}
  \end{picture}
@@ -191,7 +192,7 @@ How do symbionts change with altitude and warming?
 \bigskip
 \bigskip
 Mean $\%$ $\pm$ s.e. of 49 (0.2mx0.2m) quadrats surveyed per plot. n = 5 plots per warming treatment.
-Rudgers et al. _Ecology_ (2014).
+Rudgers et al. _Ecology_ (2014)
 
  \begin{picture}(320,250)
  \put(10,300){\includegraphics[height=5.5cm]{/Users/mkazenel/Desktop/Bio381/Images/RudgersEcology.jpg}}
@@ -423,5 +424,62 @@ fungi
  {}
  \end{minipage}}
  \end{picture}
+
+## Results: _F. thurberi_
+  \begin{picture}(320,250)
+ \put(-30,60){\includegraphics[height=5cm]{/Users/mkazenel/Desktop/Bio381/Images/FETH_NMDS.png}}
+ \put(20,40){\begin{minipage}[t]{1\linewidth}
+ {No effect of warming or sampling date}
+ \end{minipage}}
+ \end{picture}
  
-\cite{Bascompte2007}
+## Results: _P. pratensis_
+\bigskip
+
+- No effect of warming     
+- Effect of sampling date (df = 1, pseudo-F = 2.6595, P = 0.0065     
+
+  \begin{picture}(320,250)
+ \put(-30,80){\includegraphics[height=5cm]{/Users/mkazenel/Desktop/Bio381/Images/POPR_NMDS.png}}
+ \put(20,40){\begin{minipage}[t]{1\linewidth}
+ {}
+ \end{minipage}}
+ \end{picture}
+
+## Indicator Species Analysis (SIMPER)
+\bigskip
+Control vs. warmed plots
+
+  \begin{picture}(320,250)
+ \put(0,80){\includegraphics[height=4cm]{/Users/mkazenel/Desktop/Bio381/Images/Table1.png}}
+ \put(20,40){\begin{minipage}[t]{1\linewidth}
+ {}
+ \end{minipage}}
+ \end{picture}
+
+##
+_F. thurberi_ vs. _P. pratensis_
+\begin{figure}
+   \includegraphics[width=1\textwidth]{/Users/mkazenel/Desktop/Bio381/Images/Table2_Image.png}
+   \vfill
+   \includegraphics[width=0.75\textwidth]{/Users/mkazenel/Desktop/Bio381/Images/Table3.png}
+\end{figure}
+_F. thurberi_ vs. _A. lettermanii_
+
+## Taxonomy
+\bigskip
+  \begin{picture}(320,250)
+ \put(20,30){\includegraphics[height=7.5cm]{/Users/mkazenel/Desktop/Bio381/Images/TaxTable.png}}
+ \put(20,40){\begin{minipage}[t]{1\linewidth}
+ {}
+ \end{minipage}}
+ \end{picture}
+
+## Questions or comments?
+\bigskip
+  \begin{picture}(320,250)
+ \put(50,30){\includegraphics[height=7.5cm]{/Users/mkazenel/Desktop/Bio381/Images/FinalPhoto.png}}
+ \put(20,40){\begin{minipage}[t]{1\linewidth}
+ {}
+ \end{minipage}}
+ \end{picture}
