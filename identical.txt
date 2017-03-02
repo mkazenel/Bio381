@@ -1,0 +1,13 @@
+### `identical`
+#### Melanie R. Kazenel
+
+The `identical` function can be used to test whether two objects are exactly equal to one another. The function takes two R objects of any type as input. The output is TRUE if the objects are equal to one another, and FALSE otherwise. The "num.eq" argument can be added to specify whether double and complex non-NA numbers should be compared using "==" (equal), which is the default (num.eq = TRUE), or bitwise (num.eq = FALSE). The "single.NA" argument can be used to specify whether to differentiate different types of NAs and NaNs; the default is TRUE, signifying that they should not be differentiated.
+
+```{r}
+# Check whether two vectors are equal to one another
+z <- c(2,3,5,7,"ten", "seven")
+x <- c(2,3,5,7,"ten", "seven")
+y <- c(2,3,5,7,"ten", "eight")
+identical(z,x) # z and x are equal to one another
+identical(z,y) # z and y are not equal to one another
+```

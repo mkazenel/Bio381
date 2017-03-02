@@ -1,0 +1,21 @@
+### `dim`
+#### Melanie R. Kazenel
+
+The `dim` function can be used to obtain or specify the dimensions of an R object.
+
+For use of `dim` to obtain the dimensions of an object, the function's input is an R object of more than one dimension, such as a matrix, array, or data frame. The output is a set of numbers indicating the dimensions of the object. For instance, when the input is a 2-dimensional object such as a matrix or data frame, the first number in the output is the number of rows in the object, and the second number is the number of columns.
+
+For use of `dim` to specify the dimensions of an object, the input can be an R object of one or more dimensions. The `dim` function can be used to assign a new set of dimensions to the object, so long as the new set of dimensions is compatible with the number of observations in the object. The output in this case is an object with the newly specified dimensions.
+
+```{r}
+# Example use of the `dim` function to obtain the dimensions of a matrix
+m <- matrix(data = 1:8, nrow = 4, ncol = 2) # creates a matrix
+print(m) 
+dim(m) # prints out the dimensions of the matrix in the form of "rows, columns"
+
+# Example use of the `dim` function to convert a vector into a matrix of specified dimensions
+m2 <- c(1:12) # creates a vector
+print(m2)
+dim(m2) <- c(3,4) # converts the vector into a matrix with 3 rows and 4 columns
+print(m2)
+```

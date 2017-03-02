@@ -1,0 +1,13 @@
+### `asin`
+#### Melanie R. Kazenel
+
+The `asin` function computes the arc-sine of a numeric or complex vector, which is the input. The input should be in radians, not degrees. The output is the arc-sine value of each number in the vector.  
+
+```{r}
+# Compute the arc-sine of a single number
+asin(1)
+
+# Compute the arc-sine of each number in a vector
+z <- c(0.5,0.75,1) # create a vector
+asin(z) # compute the arcsine of each element
+```

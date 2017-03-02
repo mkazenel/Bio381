@@ -1,0 +1,18 @@
+### `choose`
+#### Melanie R. Kazenel
+
+The `choose` function can be used to calculate binomial coefficients. In other words, it can be used to calculate "n choose k" -- the number of ways to to choose k elements from from a set of n elements, where n is a number and k is an integer. As arguments, the function takes a numeric vector for n and an integer vector for k. The function will round non-integer values of k to integers by default. When the vectors have a lenghth of one, the output is a single "n choose k" value. When the vectors contain multiple elements, the function will calculate "n choose k" for the pairs of elements in corresponding positions in the vectors. 
+
+```{r}
+# Calculate the number of ways to choose 2 elements from a set of 8 elements
+choose(n=8,k=2)
+
+# Calculate the number of ways to choose 3 elements from a set of 4 elements
+choose(n=4,k=3)
+
+# If vectors containing equal numbers of elements are used as input for n and k, the function will calculate "n choose k" for pairwise combinations of elements in corresponding positions in the vectors.
+choose(n=c(8,4),k=c(2,3))
+
+# In the example below, the vectors for n and k contain unequal numbers of elements. The value of k is used to calculate "n choose k" for both values in n.
+choose(n=c(8,4),k=2)
+```

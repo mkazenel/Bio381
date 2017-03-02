@@ -1,0 +1,17 @@
+### `readLines`
+#### Melanie R. Kazenel
+
+The `readLines` function can be used to read text or data into R that is not formatted in a way conducive to being read in using a function such as `read.csv` or `read.table`. For instance, `readLines` can be used to read in unformatted text. The input for the function is a URL or file. The output is a vector in which each element corresponds to a line in the input file. 
+
+The "n=" argument can be used to specify the number of lines you want to be read in; the default value is -1 and means that all lines will be read in. The "ok" argument can be used to specify whether a warning message should come up if the end of the file is reached before the number of lines specified in the "n=" argument is reached; the default is TRUE. The "encoding" argument can be used to specify the type of encoding used in the document; the default is "unknown." The "skipNul" argument can be used to specify whether nulls in the dataset should be skipped rather than read in; the default is FALSE. The "warn" argument can be added to specify whether certain warning messages should come up; the default is TRUE.
+
+```{r}
+# Read all of the text from a webpage into R
+z <- readLines("https://gotellilab.github.io/Bio381/CourseMaterials/CourseSyllabus.html")
+summary(z)
+
+# Read the first 5 lines from a webpage into R
+z <- readLines("https://gotellilab.github.io/Bio381/CourseMaterials/CourseSyllabus.html", n = 5L)
+summary(z)
+print(z)
+```

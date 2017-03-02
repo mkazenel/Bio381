@@ -1,0 +1,26 @@
+### `names`
+#### Melanie R. Kazenel
+
+The `names` function can be used to obtain the names associated with the elements of an object. It can also be used to assign names to the object. The function's input is an R object, and the names associated with each element are the output.
+
+```{r}
+# The following vector does not have names assigned to it
+z <- c(1:4)
+print(z)
+names(z)
+
+# Assign names to the vector using the "names" function
+names(z) <- c("kale", "broccoli", "cabbage", "brussels sprouts") # assign names to the vector
+print(z)
+names(z) # obtain the names associated with the vector
+
+# Change the name assigned to a specific element within a vector by specifying the position of the element you wish to change the name of
+z <- "names<-"(z, "[<-"(names(z), 2, "collards"))
+print(z)
+names(z)
+
+# Remove all names associated with the vector
+names(z) <- NULL
+print(z)
+
+```

@@ -1,0 +1,29 @@
+### `mean`
+#### Melanie R. Kazenel
+
+The `mean` function calculates the arithmetic mean of a set of values. The function takes a numeric or logical vector (or a date, date-time, or time interval object) as input, and the output of the function is the arithmetic mean of the values in the object. The output is in the form of a vector with a length of one. In addition, the `mean` function can take a complex vector as its input if specific parameters are specified.
+
+Under default settings, the `mean` function calculates the mean of the all of the observations in an object, and any NA values in the object are not removed prior to the calcuation of the mean. To remove a particular fraction of the observations from each end of the object before the mean is computed, the "trim" argument can be added. To remove NAs from the object before the mean is computed, the "na.rm" argument can be added.
+
+```{r}
+### Example use of the `mean` function for a numeric vector
+
+data <- c(4,8,10,25)
+
+# Calculate the mean using default settings
+mean(data)
+
+# Trim 25% of the observations from each end of the vector, and then calculate the mean of the remaining observations.
+mean(data, trim = 0.25)
+
+
+### Example use of the `mean` function for a vector containing a "NA" value
+
+data2 <- c(4,8,10,25,NA)
+
+# Calculating the mean using default settings yields "NA"
+mean(data2)
+
+# Adding "na.rm = TRUE" removes the "NA" and then calculates the mean of the remaining observations.
+mean(data2, na.rm = TRUE)
+```

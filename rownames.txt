@@ -1,0 +1,18 @@
+### `rownames`
+#### Melanie R. Kazenel
+
+The `rownames` function can be used to specify or obtain the names associated with rows in a matrix or matrix-like object. The function's input is a matrix-like R object, and the names associated with each row are the output. The arguments "do.NULL" and "prefix" can be added; see the example below for an explanation of how to use these arguments.
+
+```{r}
+# The following matrix does not have row names assigned to it
+z <- matrix(data = c(1:8), nrow = 4, ncol = 2)
+print(z)
+rownames(z) # under default settings, the output of 'rownames' is NULL when no row names have been assigned
+rownames(z, do.NULL = FALSE) # when do.NULL = FALSE, names are assigned to each row using the prefix "row" plus a number
+rownames(z, do.NULL = FALSE, prefix = "specialname") # the prefix argument can be added to specify that a name other than "row" should be added before each number when do.NULL = FALSE
+
+# Assign row names to the matrix 
+rownames(z) <- c("kale", "broccoli", "cabbage", "brussels sprouts") # assign row names to the matrix
+print(z)
+rownames(z) # obtain the row names associated with the matrix
+``` 

@@ -1,0 +1,237 @@
+---
+title: "Assignment 6"
+author: "Melanie Kazenel"
+date: "February 22, 2017"
+output: 
+  prettydoc::html_pretty:
+    theme: leonids
+    highlight: github
+---
+
+```{r}
+# Takes a subsetted list of functions from Hadley Advanced R
+# Assigns each randomly to a student in the class
+# 19 February 2017
+# NJG
+
+# Ensure that the same random number sequence is used by everyone.
+set.seed(100) 
+
+# The Hadley R functions:
+firstToLearn <- c("str", "?")
+
+operators <- c("%in%", "match", "=", "<-", "<<-", "$", "[",
+               "[[", "head", "tail", "subset", "with", "assign", "get")
+comparisons <- c("all.equal", "identical", "!=", "==", ">", ">=", "<", "<=",  "is.na", "complete.cases",  "is.finite")
+
+basicMath <- c("*", "+", "-", "/", "^", "%%", "%/%", "abs", "sign", "acos", "asin", "atan", "atan2", "sin", "cos", "tan", "ceiling", "floor", "round", "trunc", "signif", "exp", "log", "log10", "log2", "sqrt", "max", "min", "prod", "sum", "cummax", "cummin", "cumprod", "cumsum", "diff", "pmax", "pmin", "range", "mean", "median", "cor", "sd", "var", "rle")
+
+logicalSets <- c("&", "|", "!", "xor", "all", "any", "intersect", "union", "setdiff", "setequal", "which")
+
+vectorsMatrices <- c("c", "matrix", "length", "dim", "ncol", "nrow", "cbind", "rbind", "names", "colnames", "rownames", "t", "diag", "sweep", "as.matrix", "data.matrix")
+
+makingVectors <- c("c", "rep", "rep_len", "seq", "seq_len", "seq_along", "rev", "sample", "choose", "factorial", "combn", "is.character", "is.numeric", "is.logical", "as.character", "as.numeric", "as.logical")
+
+listsDataFrames <- c("list", "unlist",  "data.frame", "as.data.frame", "split", "expand.grid")
+
+output <- c("print", "cat", "message", "warning", "dput", "format", "sink", "capture.output", "sprintf")
+
+readingWritingData <- c("data", "count.fields", "read.csv", "write.csv", "read.delim", "write.delim", "read.fwf", "readLines", "writeLines", "readRDS", "saveRDS", "load", "save")
+
+# Combine all of the function lists and randomize the order:
+RFunctions <- c(firstToLearn, operators, comparisons, basicMath, logicalSets, vectorsMatrices, makingVectors, listsDataFrames, output, readingWritingData)
+
+RFunctions <- sample(RFunctions)
+
+# Create class list
+classNames <- c("Alger", "Ashlock", "Burnham", "Clark", "Kazenal", "Keller", "Looi", "Makhukov", "Mickuki", "Nevins", "Southgate") 
+
+# Assign functions
+functionAssignments <- rep_len(classNames, length.out=length(RFunctions))
+
+# Bind the two columns into a data frame
+functionsFinal <- data.frame(functionAssignments,RFunctions)
+
+melanie <- split(functionsFinal, functionsFinal$functionAssignments)
+melanie$Kazenal
+```
+
+
+
+### `mean`
+#### Melanie R. Kazenel
+
+The `mean` function calculates the arithmetic mean of a set of values. The function takes a numeric or logical vector (or a date, date-time, or time interval object) as input, and the output of the function is the arithmetic mean of the values in the object. The output is in the form of a vector with a length of one. In addition, the `mean` function can take a complex vector as its input if specific parameters are specified.
+
+Under default settings, the `mean` function calculates the mean of the all of the observations in an object, and any NA values in the object are not removed prior to the calcuation of the mean. To remove a particular fraction of the observations from each end of the object before the mean is computed, the "trim" argument can be added. To remove NAs from the object before the mean is computed, the "na.rm" argument can be added.
+
+```{r}
+### Example use of the `mean` function for a numeric vector
+
+data <- c(4,8,10,25)
+
+# Calculate the mean using default settings
+mean(data)
+
+# Trim 25% of the observations from each end of the vector, and then calculate the mean of the remaining observations.
+mean(data, trim = 0.25)
+
+
+### Example use of the `mean` function for a vector containing a "NA" value
+
+data2 <- c(4,8,10,25,NA)
+
+# Calculating the mean using default settings yields "NA"
+mean(data2)
+
+# Adding "na.rm = TRUE" removes the "NA" and then calculates the mean of the remaining observations.
+mean(data2, na.rm = TRUE)
+```
+
+
+
+### `dim`
+#### Melanie R. Kazenel
+
+The `dim` function can be used to obtain or specify the dimensions of an R object.
+
+For use of `dim` to obtain the dimensions of an object, the function's input is an R object of more than one dimension, such as a matrix, array, or data frame. The output is a set of numbers indicating the dimensions of the object. For instance, when the input is a 2-dimensional object such as a matrix or data frame, the first number in the output is the number of rows in the object, and the second number is the number of columns.
+
+For use of `dim` to specify the dimensions of an object, the input can be an R object of one or more dimensions. The `dim` function can be used to assign a new set of dimensions to the object, so long as the new set of dimensions is compatible with the number of observations in the object. The output in this case is an object with the newly specified dimensions.
+
+```{r}
+# Example use of the `dim` function to obtain the dimensions of a matrix
+m <- matrix(data = 1:8, nrow = 4, ncol = 2) # creates a matrix
+print(m) 
+dim(m) # prints out the dimensions of the matrix in the form of "rows, columns"
+
+# Example use of the `dim` function to convert a vector into a matrix of specified dimensions
+m2 <- c(1:12) # creates a vector
+print(m2)
+dim(m2) <- c(3,4) # converts the vector into a matrix with 3 rows and 4 columns
+print(m2)
+```
+
+
+
+### `names`
+#### Melanie R. Kazenel
+
+The `names` function can be used to obtain the names associated with the elements of an object. It can also be used to assign names to the object. The function's input is an R object, and the names associated with each element are the output.
+
+```{r}
+# The following vector does not have names assigned to it
+z <- c(1:4)
+print(z)
+names(z)
+
+# Assign names to the vector using the "names" function
+names(z) <- c("kale", "broccoli", "cabbage", "brussels sprouts") # assign names to the vector
+print(z)
+names(z) # obtain the names associated with the vector
+
+# Change the name assigned to a specific element within a vector by specifying the position of the element you wish to change the name of
+z <- "names<-"(z, "[<-"(names(z), 2, "collards"))
+print(z)
+names(z)
+
+# Remove all names associated with the vector
+names(z) <- NULL
+print(z)
+
+```
+
+
+
+### `readLines`
+#### Melanie R. Kazenel
+
+The `readLines` function can be used to read text or data into R that is not formatted in a way conducive to being read in using a function such as `read.csv` or `read.table`. For instance, `readLines` can be used to read in unformatted text. The input for the function is a URL or file. The output is a vector in which each element corresponds to a line in the input file. 
+
+The "n=" argument can be used to specify the number of lines you want to be read in; the default value is -1 and means that all lines will be read in. The "ok" argument can be used to specify whether a warning message should come up if the end of the file is reached before the number of lines specified in the "n=" argument is reached; the default is TRUE. The "encoding" argument can be used to specify the type of encoding used in the document; the default is "unknown." The "skipNul" argument can be used to specify whether nulls in the dataset should be skipped rather than read in; the default is FALSE. The "warn" argument can be added to specify whether warning messages should come up; the default is TRUE.
+
+```{r}
+# Read all of the text from a webpage into R
+z <- readLines("https://gotellilab.github.io/Bio381/CourseMaterials/CourseSyllabus.html")
+summary(z)
+
+# Read the first 5 lines from a webpage into R
+z <- readLines("https://gotellilab.github.io/Bio381/CourseMaterials/CourseSyllabus.html", n = 5L)
+summary(z)
+print(z)
+```
+
+
+
+### `choose`
+#### Melanie R. Kazenel
+
+The `choose` function can be used to calculate binomial coefficients. In other words, it can be used to calculate "n choose k" -- the number of ways to to choose k elements from from a set of n elements, where n is a number and k is an integer. As arguments, the function takes a numeric vector for n and an integer vector for k. The function will round non-integer values of k to integers by default. When the vectors have a lenghth of one, the output is a single "n choose k" value. When the vectors contain multiple elements, the function will calculate "n choose k" for the pairs of elements in corresponding positions in the vectors. 
+
+```{r}
+# Calculate the number of ways to choose 2 elements from a set of 8 elements
+choose(n=8,k=2)
+
+# Calculate the number of ways to choose 3 elements from a set of 4 elements
+choose(n=4,k=3)
+
+# If vectors containing equal numbers of elements are used as input for n and k, the function will calculate "n choose k" for pairwise combinations of elements in corresponding positions in the vectors.
+choose(n=c(8,4),k=c(2,3))
+
+# In the example below, the vectors for n and k contain unequal numbers of elements. The value of k is used to calculate "n choose k" for both values in n.
+choose(n=c(8,4),k=2)
+```
+
+
+
+### `identical`
+#### Melanie R. Kazenel
+
+The `identical` function can be used to test whether two objects are exactly equal to one another. The function takes two R objects of any type as input. The output is TRUE if the objects are equal to one another, and FALSE otherwise. The "num.eq" argument can be added to specify whether double and complex non-NA numbers should be compared using "==" (equal), which is the default (num.eq = TRUE), or bitwise (num.eq = FALSE). The "single.NA" argument can be used to specify whether to differentiate different types of NAs and NaNs; the default is TRUE, signifying that they should not be differentiated.
+
+```{r}
+# Check whether two vectors are equal to one another
+z <- c(2,3,5,7,"ten", "seven")
+x <- c(2,3,5,7,"ten", "seven")
+y <- c(2,3,5,7,"ten", "eight")
+identical(z,x) # z and x are equal to one another
+identical(z,y) # z and y are not equal to one another
+```
+
+
+
+### `rownames`
+#### Melanie R. Kazenel
+
+The `rownames` function can be used to specify or obtain the names associated with rows in a matrix or matrix-like object. The function's input is a matrix-like R object, and the names associated with each row are the output. The arguments "do.NULL" and "prefix" can be added; see the example below for an explanation of how to use these arguments.
+
+```{r}
+# The following matrix does not have row names assigned to it
+z <- matrix(data = c(1:8), nrow = 4, ncol = 2)
+print(z)
+rownames(z) # under default settings, the output of 'rownames' is NULL when no row names have been assigned
+rownames(z, do.NULL = FALSE) # when do.NULL = FALSE, names are assigned to each row using the prefix "row" plus a number
+rownames(z, do.NULL = FALSE, prefix = "specialname") # the prefix argument can be added to specify that a name other than "row" should be added before each number when do.NULL = FALSE
+
+# Assign row names to the matrix 
+rownames(z) <- c("kale", "broccoli", "cabbage", "brussels sprouts") # assign row names to the matrix
+print(z)
+rownames(z) # obtain the row names associated with the matrix
+``` 
+
+
+
+### `asin`
+#### Melanie R. Kazenel
+
+The `asin` function computes the arc-sine of a numeric or complex vector, which is the input. The input should be in radians, not degrees. The output is the arc-sine value of each number in the vector.  
+
+```{r}
+# Compute the arc-sine of a single number
+asin(1)
+
+# Compute the arc-sine of each number in a vector
+z <- c(0.5,0.75,1) # create a vector
+asin(z) # compute the arcsine of each element
+```
+
