@@ -1,0 +1,105 @@
+---
+title: "Assignment 9"
+author: "Melanie Kazenel"
+date: "March 22, 2017"
+output: 
+  prettydoc::html_pretty:
+    theme: leonids
+    highlight: github
+---
+
+## 1. Modify your existing functions so that only the dataframe is the argument input
+
+```{r}
+##################################################
+# FUNCTION: anova
+# performs an analysis of variance
+# inputs: a vector of categorical data (x) and a vector of continuous data (y)
+# outputs: degrees of freedom, sums of squares, mean, F-value, and p-value
+#------------------------------------------------- 
+anova <- function(dataFrame=data.frame(as.factor(rep(c("High","Low"),each=5)),runif(10))) {
+  x <- dataFrame[,1]
+  y <- dataFrame[,2]
+  newDataFrame <- data.frame(x,y)
+  myMod <- aov(y~x, data = newDataFrame)
+  myOut <- summary(myMod)
+  return(myOut)
+}
+
+anova()
+
+##################################################
+# FUNCTION: anovaGraph
+# performs an analysis of variance and creates a boxplot depicting the results
+# inputs: a vector of categorical data (x) and a vector of continuous data (y)
+# outputs: barplot 
+#------------------------------------------------- 
+anovaGraph <- function(dataFrame=data.frame(as.factor(rep(c("High","Low"),each=5)),runif(10))) {
+  x <- dataFrame[,1]
+  y <- dataFrame[,2]
+  newDataFrame <- data.frame(x,y)
+  myMod <- aov(y~x, data = newDataFrame)
+  myOut <- boxplot(y~x,data=newDataFrame,col=c("deepskyblue4","deepskyblue3","deepskyblue2"))
+  return(myOut)
+}
+
+anovaGraph()
+
+```
+
+
+## 2. Use your data from HW4 to input into your functions (where applicable) and produce output and plots
+```{r}
+
+# Read in the data from Homework 4
+z <- read.table("Data.csv", header = TRUE, sep=",", stringsAsFactors=FALSE)
+
+# Effect of warming treatment on Shannon diversity
+x <- data.frame(z$WarmingTreatment,z$DivShann)
+anova(x)
+anovaGraph(x)
+
+# Effect of warming treatment on richness
+y <- data.frame(z$WarmingTreatment,z$Richness)
+anova(y)
+anovaGraph(y)
+
+# Effect of warming treatment on evenness
+a <- data.frame(z$WarmingTreatment,z$Evenness)
+anova(a)
+anovaGraph(a)
+
+```
+
+
+## 3. Make a random data set that mimics your existing data (test mean and variance) and use the functions
+
+```{r}
+
+# Read in original data
+z <- read.table("Data.csv", header = TRUE, sep=",", stringsAsFactors=FALSE)
+
+# Create random response variable data
+library(fGarch)
+
+par(mfrow = c(2,1))
+hist(rsnorm(120, mean = 2.644833, sd = 0.7477299, xi = -5)) # PLAY AROUND MORE WITH PARAMETERS UNTIL THIS MATCHES SECOND GRAPH
+hist(z$DivShann)
+
+mean(z$DivShann)
+sd(z$DivShann)
+
+
+
+
+
+# Test the effect of warming treatment on the response using the random data
+randomData <- data.frame(z$WarmingTreatment,y)
+anova(randomData)
+anovaGraph(randomData)
+
+```
+
+
+## 4. Manipulate your random data set to mimic a hypothesis you created (i.e. I expect a positive relationship between the number of cats someone owns and that person’s IQ) and use the functions
+

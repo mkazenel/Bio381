@@ -1,0 +1,215 @@
+---
+title: "Assignment 08"
+author: "Melanie Kazenel"
+date: "March 8, 2017"
+output: 
+  prettydoc::html_pretty:
+    theme: leonids
+    highlight: github
+---
+
+## (1) Regression
+
+```{r}
+
+##################################################
+# FUNCTION: fitLinear 
+# fits a simple linear regression
+# inputs: numeric vectors of predictor (x) and response (y)
+# outputs: slope, standard error, t-value, p-value, and adjusted r-squared value
+#------------------------------------------------- 
+fitLinear <- function(x=runif(50),y=runif(50)) {
+  dataFrame <- data.frame(x,y)
+  myMod <- lm(y~x) 
+  myOut <- c(slope=summary(myMod)$coefficients[2,1],
+             standardError=summary(myMod)$coefficients[2,2],
+             tValue=summary(myMod)$coefficients[2,3],
+             pValue=summary(myMod)$coefficients[2,4],
+             adjustedRsquared=summary(myMod)$adj.r)
+  return(myOut)
+}
+##################################################
+
+# run the function with its default values
+fitLinear()
+
+# create a tiny fake data set 
+myData <- matrix(data=runif(10),nrow=5,ncol=2)
+myData <- as.data.frame(myData)
+colnames(myData) <- c("Time","Distance")
+
+# run your code on the fake data
+fitLinear(x=myData$Time,y=myData$Distance)
+
+
+##################################################
+# FUNCTION: fitLinearPlot
+# fits a simple linear regression and creates a scatterplot
+# inputs: numeric vectors of predictor (x) and response (y)
+# outputs: scatterplot with regression line
+#------------------------------------------------- 
+fitLinearPlot <- function(x=runif(50),y=runif(50)) {
+  dataFrame <- data.frame(x,y)
+  myMod <- lm(y~x) 
+  return(plot(y=y,x=x,pch=21,bg="lightgreen",cex=1.5, abline(myMod)))
+}
+##################################################
+
+# illustrate the graphics function for your default settings and for the tiny fake data set
+fitLinearPlot()
+fitLinearPlot(x=myData$Time,y=myData$Distance)
+
+```
+
+## (2) ANOVA
+
+```{r}
+##################################################
+# FUNCTION: anova
+# performs an analysis of variance
+# inputs: a vector of categorical data (x) and a vector of continuous data (y)
+# outputs: degrees of freedom, sums of squares, mean, F-value, and p-value
+#------------------------------------------------- 
+anova <- function(x=as.factor(rep(c("Treatment1","Treatment2","Treatment3"),each=3)),y=runif(9)) {
+  dataFrame <- data.frame(x,y)
+  myMod <- aov(y~x, data = dataFrame)
+  myOut <- summary(myMod)
+  return(myOut)
+}
+##################################################
+
+# run the function with its default values
+anova()
+
+# create a tiny fake data set 
+xVar <- as.factor(rep(c("High","Low"),each=5)) 
+yVar <- runif(10)
+dataFrame <- data.frame(xVar,yVar)
+
+# run your code on the fake data
+anova(x=dataFrame$xVar,y=dataFrame$yVar)
+
+
+##################################################
+# FUNCTION: anovaGraph
+# performs an analysis of variance and creates a boxplot depicting the results
+# inputs: a vector of categorical data (x) and a vector of continuous data (y)
+# outputs: barplot 
+#------------------------------------------------- 
+anovaGraph <- function(x=as.factor(rep(c("Treatment1","Treatment2","Treatment3"),each=3)),y=runif(9)) {
+  dataFrame <- data.frame(x,y)
+  myMod <- aov(y~x, data = dataFrame)
+  myOut <- boxplot(y~x,data=dataFrame,col=c("deepskyblue4","deepskyblue3","deepskyblue2"))
+  return(myOut)
+}
+##################################################
+
+# illustrate the graphics function for your default settings and for the tiny fake data set
+anovaGraph()
+anovaGraph(x=dataFrame$xVar,y=dataFrame$yVar)
+```
+
+
+## (3) Contingency Table Analysis
+
+```{r}
+##################################################
+# FUNCTION: contTable
+# performs a contingency table analysis (chi-squared test) 
+# inputs: two vectors of count data
+# outputs: chi-squared value, degrees of freedom, p-value
+#------------------------------------------------- 
+contTable <- function(x=sample(1:100,3),y=sample(1:100,3)) {
+  dataMatrix <- rbind(x,y)
+  myMod <- chisq.test(dataMatrix)
+  return(print(myMod))
+}
+##################################################
+
+# run the function with its default values
+contTable()
+
+# create a tiny fake data set 
+vec1 <- sample(1:100,4)
+vec2 <- sample(1:100,4)
+dataFrame <- rbind(vec1,vec2)
+
+# run your code on the fake data
+contTable(x=dataFrame[1,], y=dataFrame[2,])
+
+
+##################################################
+# FUNCTION: contTableGraph
+# performs a contingency table analysis (chi-squared test) and creates a mosaic plot
+# inputs: two vectors of count data
+# outputs: mosaic plot
+#------------------------------------------------- 
+contTableGraph <- function(x=sample(1:100,3),y=sample(1:100,3)) {
+  dataMatrix <- rbind(x,y)
+  myMod <- chisq.test(dataMatrix)
+  myOut <- mosaicplot(x=dataMatrix,
+           col=c("blue","green","purple"),
+           shade=FALSE)
+  return(myOut)
+}
+##################################################
+
+# illustrate the graphics function for your default settings and for the tiny fake data set
+contTableGraph()
+contTableGraph(x=dataFrame[1,], y=dataFrame[2,])
+
+```
+
+
+## (4) Logistic Regression
+
+```{r}
+##################################################
+# FUNCTION: logReg
+# performs a logistic regression analysis
+# inputs: a vector of continuous data (x) and a vector of categorical data (y)
+# outputs: slope, standard error, z-value, and p-value for the logistic regression
+#------------------------------------------------- 
+logReg <- function(x = rgamma(n=25,shape=5,scale=5), y = rbinom(n=25,size=1,p=0.5)) {
+  dataFrame <- data.frame(x,y)
+  myMod <- glm(y ~ x,
+                 data=dataFrame,
+                 family=binomial(link="logit"))
+  return(summary(myMod)$coefficients)
+}
+##################################################
+
+# run the function with its default values
+logReg()
+
+# create a tiny fake data set 
+xVec <- c(2,3,8,20,4,1,3,5)
+yVec <- c(0,1,1,0,0,1,0,1)
+dataFrame <- data.frame(xVec,yVec)
+
+# run your code on the fake data
+logReg(x=dataFrame$xVec,y=dataFrame$yVec)
+
+##################################################
+# FUNCTION: logRegGraph
+# performs a logistic regression analysis and creates a scatterplot depicting the results
+# inputs: a vector of continuous data (x) and a vector of categorical data (y)
+# outputs: scatterplot
+#------------------------------------------------- 
+logRegGraph <- function(x = rgamma(n=25,shape=5,scale=5), y = rbinom(n=25,size=1,p=0.5)) {
+  dataFrame <- data.frame(x,y)
+  myMod <- glm(y ~ x,
+                 data=dataFrame,
+                 family=binomial(link="logit"))
+  myOut <- plot(x=dataFrame$x, y=dataFrame$y,pch=21,bg="green",cex=2)
+  return(myOut)
+}
+##################################################
+
+# illustrate the graphics function for your default settings and for the tiny fake data set
+logRegGraph()
+logRegGraph(x=dataFrame$xVec,y=dataFrame$yVec)
+
+```
+
+

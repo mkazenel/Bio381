@@ -18,6 +18,7 @@ output:
 * [Assignment 4](Homework04.html)   
 * [Assignment 5](Homework05.html)   
 * [Assignment 6](Homework06.html)   
+* [Assignment 8](Homework08.html) 
 
 ##Other Links
 
