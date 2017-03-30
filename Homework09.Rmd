@@ -79,27 +79,122 @@ anovaGraph(a)
 # Read in original data
 z <- read.table("Data.csv", header = TRUE, sep=",", stringsAsFactors=FALSE)
 
-# Create random response variable data
-library(fGarch)
-
-par(mfrow = c(2,1))
-hist(rsnorm(120, mean = 2.644833, sd = 0.7477299, xi = -5)) # PLAY AROUND MORE WITH PARAMETERS UNTIL THIS MATCHES SECOND GRAPH
+# I chose to focus on one of my response variables (Shannon diversity, or "DivShann"). To begin, I examined the distribution of my data, and calculated the mean and standard deviation:
 hist(z$DivShann)
-
 mean(z$DivShann)
 sd(z$DivShann)
 
+# Given the distribution of my data, to create a random data set with structure similar to my original data, I decided to use the 'rsnorm' function to simulate a skewed normal distribution. I used the sample size, mean, and standard deviation from my actual data set as inputs in the 'rsnorm' function. I then tested out different values for the skewness parameter (xi) and used histograms to compare each simulated random data set to my own data until the distributions matched relatively closely.
+
+library(fGarch)
+par(mfrow = c(2,1))
+
+# Random data with xi = -5 compared to my data
+hist(rsnorm(120, mean = 2.644833, sd = 0.7477299, xi = -5)) 
+hist(z$DivShann)
+
+# Random data with xi = -3 compared to my data
+hist(rsnorm(120, mean = 2.644833, sd = 0.7477299, xi = -3)) 
+hist(z$DivShann)
+
+# Random data with xi = -4 compared to my data (closest match) 
+hist(rsnorm(120, mean = 2.644833, sd = 0.7477299, xi = -4)) 
+hist(z$DivShann)
 
 
-
+# Create random data using xi = -4
+y <- rsnorm(120, mean = 2.644833, sd = 0.7477299, xi = -4)
 
 # Test the effect of warming treatment on the response using the random data
 randomData <- data.frame(z$WarmingTreatment,y)
 anova(randomData)
+par(mfrow = c(1,1))
 anovaGraph(randomData)
 
 ```
 
 
 ## 4. Manipulate your random data set to mimic a hypothesis you created (i.e. I expect a positive relationship between the number of cats someone owns and that person’s IQ) and use the functions
+
+```{r}
+
+# Hypothesis: Shannon diversity is higher in warmed plots relative to control plots.
+
+print(z$WarmingTreatment) # view data
+z2 <- z[order(z$WarmingTreatment),] # sort data by warming treatment 
+print(z2$WarmingTreatment) # view sorted data
+
+# Simulate normally distributed random data for each warming treatment, and combine the two vectors of data
+warmed <- rnorm(60, mean = 4, sd = 0.7)
+control <- rnorm(60, mean = 2, sd = 0.7)
+combined <- c(warmed,control)
+
+# Test the effect of warming treatment on the simulated Shannon diversity data
+randomDataBling <- data.frame(z2$WarmingTreatment,combined)
+anova(randomDataBling)
+par(mfrow = c(1,1))
+anovaGraph(randomDataBling)
+
+```
+
+
+
+## Use logistic regression to see how Shannon diversity of a sample might predict whether it is from a warmed or control plot
+
+### Logistic regression functions
+```{r}
+##################################################
+# FUNCTION: logReg
+# performs a logistic regression analysis
+# inputs: a vector of continuous data (x) and a vector of categorical data (y)
+# outputs: slope, standard error, z-value, and p-value for the logistic regression
+#------------------------------------------------- 
+logReg <- function(x = rgamma(n=25,shape=5,scale=5), y = rbinom(n=25,size=1,p=0.5)) {
+  dataFrame <- data.frame(x,y)
+  myMod <- glm(y ~ x,
+                 data=dataFrame,
+                 family=binomial(link="logit"))
+  return(summary(myMod)$coefficients)
+}
+
+##################################################
+# FUNCTION: logRegGraph
+# performs a logistic regression analysis and creates a scatterplot depicting the results
+# inputs: a vector of continuous data (x) and a vector of categorical data (y)
+# outputs: scatterplot
+#------------------------------------------------- 
+logRegGraph <- function(x = rgamma(n=25,shape=5,scale=5), y = rbinom(n=25,size=1,p=0.5)) {
+  dataFrame <- data.frame(x,y)
+  myMod <- glm(y ~ x,
+                 data=dataFrame,
+                 family=binomial(link="logit"))
+  myOut <- plot(x=dataFrame$x, y=dataFrame$y,pch=21,bg="green",cex=2)
+  return(myOut)
+}
+```
+
+### Using logistic regression functions on the three data sets
+```{r}
+# Actual data
+z <- read.table("Data.csv", header = TRUE, sep=",", stringsAsFactors=FALSE)
+logReg(x=z$DivShann, y=z$WarmingTreatment)
+logRegGraph(x=z$DivShann, y=z$WarmingTreatment)
+
+# Random data with same structure as original data
+x <- rsnorm(120, mean = 2.644833, sd = 0.7477299, xi = -4)
+randomData <- data.frame(z$WarmingTreatment,x)
+logReg(x=randomData$x, y=randomData$z.WarmingTreatment)
+logRegGraph(x=randomData$x, y=randomData$z.WarmingTreatment)
+
+# Random data related to hypothesis
+warmed <- rnorm(60, mean = 4, sd = 0.7)
+control <- rnorm(60, mean = 2, sd = 0.7)
+combined <- c(warmed,control)
+randomDataBling <- data.frame(z2$WarmingTreatment,combined)
+logReg(x=randomDataBling$combined, y=randomDataBling$z2.WarmingTreatment)
+logRegGraph(x=randomDataBling$combined, y=randomDataBling$z2.WarmingTreatment)
+
+```
+
+
 
