@@ -21,6 +21,9 @@ output:
 * [Assignment 8](Homework08.html)   
 * [Assignment 9](Homework09.html)   
 
+##R tutorial
+['plyr' tutorial](plyr_tutorial.html)
+
 ##Other Links
 
 [BIO 381 Course Webpage](https://gotellilab.github.io/Bio381/)

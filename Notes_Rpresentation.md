@@ -1,0 +1,3 @@
+- 30 minutes total for presentation
+- Follow Lauren's example (create script and post online so people can copy and paste)
+- Check preloaded packages for dataset (if they exist)

@@ -1,0 +1,73 @@
+---
+title: "Assignment 10"
+author: "Melanie Kazenel"
+date: "4/5/2017"
+output: 
+  prettydoc::html_pretty:
+    theme: leonids
+    highlight: github
+---
+
+## 1. Using a for or while loop, write a function to calculate the number of zeroes in a numeric vector.
+
+```{r}
+myDat <- c(0,2,7,9,0,0,3,0,0)
+emptyVec <- vector(mode="numeric")
+
+for (i in seq_along(myDat)) {
+  if (myDat[i]==0) emptyVec[i] <- 1 else
+    emptyVec[i] <- 0
+}
+sum(emptyVec)
+```
+
+## 2. Use subsetting instead of a loop to rewrite the function as a single line of code.
+
+```{r}
+myDat <- c(0,2,7,9,0,0,3,0,0)
+length(myDat[myDat==0])
+```
+
+## 3. Write a function that takes as input a numeric vector, and returns as output the maximum difference between all possible pairs of elements. Be careful to ensure that your function works properly with both negative and positive numbers. For your first version of the function, create a vector that stores all possible pairwise differences and then extracts the maximum value from that list.
+
+```{r}
+################################################################################
+# FUNCTION: max_diff
+# one line description
+# input: x
+# output: x
+#-------------------------------------------------------------------------------
+max_diff <- function(x=c(2,-10,8,5,-3)){
+  
+  cols <- rep(0,length(x)^2)
+  x_pairs <- data.frame(cols,cols)
+  counter <- 0
+  
+  for(i in 1:length(x)) {
+    for(j in 1:length(x)) {
+      counter <- counter + 1
+      iter_pairs <- c(x[i],x[j])
+      x_pairs[counter,] <- iter_pairs
+    }
+  } 
+  
+  diff <- abs(x_pairs[,1] - x_pairs[,2])
+  return(max(diff))
+}
+  
+max_diff()
+
+
+
+
+
+# WHAT WE TRIED THAT DIDN'T WORK
+for (i in 1:(length(x)-1)){
+  if (i < (length(x)-1))
+    z <- x[i]- x[i+1:length(x)]
+}
+print(z)
+```
+
+
+
