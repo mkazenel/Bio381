@@ -60,7 +60,8 @@ print(monthYearData)
 
 ### Using 'ddply' to calculate multiple summary statistics
 ```{r}
-# Use 'ddply' to calculate, for each month, means and standard deviations for daily air temperature and precipitation
+# Use 'ddply' to calculate, for each month, means and standard deviations for daily air
+# temperature and precipitation
 monthlyData <- ddply(climate,
                      "Month",
                      function(x){ 
@@ -104,14 +105,16 @@ print(monthlyData)
 
 ### Using 'transform' and 'mutate' within 'ddply'
 ```{r}
-# Use 'transform' within 'ddply' to split your data into subsets, perform a calculation on each subset, and add the results to a copy of your input data frame as a new column
+# Use 'transform' within 'ddply' to split your data into subsets, perform a calculation on
+# each subset, and add the results to a copy of your input data frame as a new column
 x <- ddply(climate, 
            "Month", 
            transform, 
            MonthlyMeanTemp = mean(AvgAirTemp))
 head(x)
 
-# 'Mutate' works similarly to 'transform', but allows you to do calculations within 'ddply' using columns you just created
+# 'Mutate' works similarly to 'transform', but allows you to do calculations within 'ddply'
+# using columns you just created
 x <- ddply(climate, 
            "Month", 
            mutate, 
@@ -135,7 +138,8 @@ d_ply(climate,
 
 ### Using other types of functions within 'ddply'
 ```{r}
-# Use a linear model to examine how precipitation changes with air temperature within each month
+# Use a linear model to examine how precipitation changes with air temperature within 
+# each month
 precipTemp <- ddply(climate, 
                      "Month", 
                      function(x) {
