@@ -133,7 +133,7 @@ d_ply(climate,
       summarise, 
       boxplot(AvgAirTemp, 
               xlab=unique(StationName), 
-              ylab="Mean Air Temperature (degrees C)"))
+              ylab="Mean Daily Air Temperature (degrees C)"))
 ```
 
 ### Using other types of functions within 'ddply'
@@ -151,7 +151,7 @@ print(precipTemp)
 
 ```
 
-### Create graphs using 'ddply' output
+### Creating graphs using 'ddply' output
 
 ```{r}
 # For each month, calculate and graph the mean and standard deviation for air temperature 
