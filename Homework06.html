@@ -85,6 +85,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <div id="post">
 <article class="post-content">
+<div id="create-a-new-markdown-file-and-a-new-chunk-of-r-code.-copy-and-paste-the-following-r-code-into-the-chunk-and-run-it." class="section level3">
+<h3>1. Create a new markdown file and a new chunk of R code. Copy and paste the following R code into the chunk, and run it.</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Takes a subsetted list of functions from Hadley Advanced R</span>
 <span class="co"># Assigns each randomly to a student in the class</span>
 <span class="co"># 19 February 2017</span>
@@ -126,9 +128,11 @@ classNames &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="
 functionAssignments &lt;-<span class="st"> </span><span class="kw">rep_len</span>(classNames, <span class="dt">length.out=</span><span class="kw">length</span>(RFunctions))
 
 <span class="co"># Bind the two columns into a data frame</span>
-functionsFinal &lt;-<span class="st"> </span><span class="kw">data.frame</span>(functionAssignments,RFunctions)
-
-melanie &lt;-<span class="st"> </span><span class="kw">split</span>(functionsFinal, functionsFinal<span class="op">$</span>functionAssignments)
+functionsFinal &lt;-<span class="st"> </span><span class="kw">data.frame</span>(functionAssignments,RFunctions)</code></pre></div>
+</div>
+<div id="illustrate-your-knowledge-of-basic-subsetting-methods-by-creating-and-printing-a-data-frame-that-shows-only-the-13-functions-that-you-are-responsible-for." class="section level3">
+<h3>2. Illustrate your knowledge of basic subsetting methods by creating and printing a data frame that shows only the 13 functions that you are responsible for.</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">melanie &lt;-<span class="st"> </span><span class="kw">split</span>(functionsFinal, functionsFinal<span class="op">$</span>functionAssignments)
 melanie<span class="op">$</span>Kazenal</code></pre></div>
 <pre><code>##     functionAssignments RFunctions
 ## 5               Kazenal       mean
@@ -144,6 +148,10 @@ melanie<span class="op">$</span>Kazenal</code></pre></div>
 ## 115             Kazenal       pmax
 ## 126             Kazenal       list
 ## 137             Kazenal     subset</code></pre>
+</div>
+<div id="entries-for-the-assigned-functions" class="section level3">
+<h3>3-6. Entries for the assigned functions</h3>
+</div>
 <div id="mean" class="section level3">
 <h3><code>mean</code></h3>
 <div id="melanie-r.-kazenel" class="section level4">

@@ -8,6 +8,8 @@ output:
     highlight: github
 ---
 
+### 1. Create a new markdown file and a new chunk of R code. Copy and paste the following R code into the chunk, and run it.
+
 ```{r}
 # Takes a subsetted list of functions from Hadley Advanced R
 # Assigns each randomly to a student in the class
@@ -52,11 +54,16 @@ functionAssignments <- rep_len(classNames, length.out=length(RFunctions))
 # Bind the two columns into a data frame
 functionsFinal <- data.frame(functionAssignments,RFunctions)
 
+```
+
+### 2. Illustrate your knowledge of basic subsetting methods by creating and printing a data frame that shows only the 13 functions that you are responsible for.
+
+```{r}
 melanie <- split(functionsFinal, functionsFinal$functionAssignments)
 melanie$Kazenal
 ```
 
-
+### 3-6. Entries for the assigned functions
 
 ### `mean`
 #### Melanie R. Kazenel

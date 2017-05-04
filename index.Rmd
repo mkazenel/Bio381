@@ -17,7 +17,7 @@ output:
 * [Assignment 3](Homework003.html)   
 * [Assignment 4](Homework04.html)   
 * [Assignment 5](Homework05.html)   
-* [Assignments 6](Homework06.html)   
+* [Assignments 6 and 7](Homework06.html)   
 * [Assignment 8](Homework08.html)   
 * [Assignment 9](Homework09.html)   
 * [Assignment 10](Homework10.html)   
