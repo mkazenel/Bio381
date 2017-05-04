@@ -136,13 +136,13 @@ z &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="dv">5</
 <h4>3) Create a vector of two random uniform numbers. In a spatial map, these can be interpreted as x and y coordinates that give the location of an individual (such as a marked forest tree in a plot that has been mapped). Using one of R’s inverse trigonometry functions (asin(), acos(), or atan()), convert these numbers into polar coordinates (If you don’t know what polar coordinates are, read about them on the web or in your calculus textbook).</h4>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">xy &lt;-<span class="st"> </span><span class="kw">runif</span>(<span class="dv">2</span>)
 <span class="kw">print</span>(xy)</code></pre></div>
-<pre><code>## [1] 0.6742284 0.4818997</code></pre>
+<pre><code>## [1] 0.9574480 0.6108419</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">r &lt;-<span class="st"> </span><span class="kw">sqrt</span>((xy[<span class="dv">1</span>])<span class="op">^</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span>(xy[<span class="dv">2</span>])<span class="op">^</span><span class="dv">2</span>)
 theta &lt;-<span class="st"> </span><span class="kw">atan</span>((xy[<span class="dv">2</span>])<span class="op">/</span>(xy[<span class="dv">1</span>]))
 
 coordinates &lt;-<span class="st"> </span><span class="kw">c</span>(r,theta)
 <span class="kw">print</span>(coordinates)</code></pre></div>
-<pre><code>## [1] 0.8287408 0.6205519</code></pre>
+<pre><code>## [1] 1.1357088 0.5678857</code></pre>
 </div>
 <div id="suppose-that-queue---csheep-fox-owl-ant-and-that-queue-represents-the-animals-that-are-lined-up-to-enter-noahs-ark-with-the-sheep-at-the-front-of-the-line.-using-r-expressions-update-the-queue-successively-as" class="section level4">
 <h4>4) Suppose that queue &lt;- c(“sheep”, “fox”, “owl”, “ant”) and that queue represents the animals that are lined up to enter Noah’s Ark, with the sheep at the front of the line. Using R expressions, update the queue successively as</h4>
@@ -213,7 +213,7 @@ z &lt;-<span class="st"> </span>z[z<span class="op">%%</span><span class="dv">2<
 <span class="co"># Part a </span>
 y &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">sum</span>(z <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.10</span>)<span class="op">/</span><span class="dv">1000</span>, <span class="kw">sum</span>(z <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.90</span>)<span class="op">/</span><span class="dv">1000</span>, <span class="kw">sum</span>(z <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.45</span> <span class="op">&amp;</span><span class="st"> </span>z <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.55</span>)<span class="op">/</span><span class="dv">1000</span>)
 <span class="kw">print</span>(y)</code></pre></div>
-<pre><code>## [1] 0.104 0.087 0.093</code></pre>
+<pre><code>## [1] 0.096 0.090 0.090</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#Parts b and c</span>
 
 <span class="co"># 1</span>
@@ -225,7 +225,7 @@ a &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">sum</
 z &lt;-<span class="st"> </span>z<span class="op">^</span><span class="dv">2</span>
 b &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">sum</span>(z <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.10</span>)<span class="op">/</span><span class="dv">1000</span>, <span class="kw">sum</span>(z <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.90</span>)<span class="op">/</span><span class="dv">1000</span>, <span class="kw">sum</span>(z <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.45</span> <span class="op">&amp;</span><span class="st"> </span>z <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.55</span>)<span class="op">/</span><span class="dv">1000</span>)
 <span class="kw">print</span>(b)</code></pre></div>
-<pre><code>## [1] 0.529 0.118 0.023</code></pre>
+<pre><code>## [1] 0.513 0.111 0.037</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># 3</span>
 z &lt;-<span class="st"> </span><span class="kw">exp</span>(z)
 c &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">sum</span>(z <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.10</span>)<span class="op">/</span><span class="dv">1000</span>, <span class="kw">sum</span>(z <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.90</span>)<span class="op">/</span><span class="dv">1000</span>, <span class="kw">sum</span>(z <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.45</span> <span class="op">&amp;</span><span class="st"> </span>z <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.55</span>)<span class="op">/</span><span class="dv">1000</span>)
