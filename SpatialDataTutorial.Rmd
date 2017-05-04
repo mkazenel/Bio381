@@ -1,0 +1,140 @@
+---
+title: "Working with Spatial Data and using tmap()"
+author: "Samantha A. Alger"
+date: "4/26/2017"
+output: html_document
+---
+Modified from:
+
+* https://cran.r-project.org/doc/contrib/intro-spatial-rl.pdf
+
+* https://github.com/mtennekes/tmap/tree/master/demo/BubbleMap)
+
+
+###INSTALL PACKAGES and SET WORKING DIRECTORY
+
+```{r results='hide', message=FALSE, warning=FALSE}
+
+
+rm(list=ls())
+
+x <- c("rgdal","tmap")
+#install.packages(x)
+lapply(x, library, character.only = TRUE)
+
+setwd("~/CompBio/MapTutorial/") # setting working directory
+
+```
+
+###STRUCTURE OF SPATIAL DATA IN R
+
+Spatial objects such as lnd are made up of different 'slots', key slots being '@data' (non geographic attribute data) and @polygons (or @lines for line data) (polygons that make up the physicial boundaries). Specific slots are accessed using the '@' symbol. Using the '$' symbol to see attribute in the @ data slot. 
+
+```{r results='hide', message=FALSE, warning=FALSE}
+#Read in the data:
+
+lnd <- readOGR("data", "london_sport") # Read in the data
+
+head(lnd@data) # use the @ symbol to refer to the data slot of the lnd object
+
+mean(lnd$Partic_Per) # use the $ symbol to refer to an attribute in the 'data' slot
+
+sapply(lnd@data, class) # To check the classes of all the variabes in a spatial dataset, you can use this command
+
+lnd$Pop_2001 <- as.numeric(as.character(lnd$Pop_2001)) # Unexpectedly, Pop_2001 is a factor, coerce the variable into the correct, numeric format...
+
+# type "lnd@" and then tab to see which slots are in lnd...
+
+#check number of rows and columns...
+nrow(lnd)
+ncol(lnd)
+```
+
+###BASIC PLOTTING
+
+```{r}
+
+plot(lnd)
+```
+
+###DATA QUERYING AND PLOTTING
+```{r}
+# select rows of lnd@data where sports participation is less than 15
+lnd@data[lnd$Partic_Per < 15, ] # This is interrogating the attribute data slot only of the lnd object..
+
+#Using the same logic to subset and plot spatial objects (polygon slot)
+
+# Select zones where sports participation is between 20 and 25%
+sel <- lnd$Partic_Per > 20 & lnd$Partic_Per < 25
+head(sel) # test output of previous selection
+plot(lnd[sel, ]) # plotting all TRUE Cases
+
+# To see these areas in context with other areas of the maps... use add= TRUE..
+
+plot(lnd, col = "lightgrey") # plot the london_sport object
+sel <- lnd$Partic_Per > 25
+plot(lnd[ sel, ], col = "turquoise", add = TRUE) # add selected zones to map
+
+#Areas of high sports participation are now highlighted in blue!
+```
+
+###USING tmap()
+Thematic maps are geographical maps in which spatial data distributions are visualized. This package offers a flexible, layer-based, and easy to use approach to create thematic maps, such as choropleths and bubble maps.
+
+```{r}
+library(tmap) # load tmap package
+
+tmap_mode="plot"
+
+# Check out it's capabilities!
+#vignette("tmap-nutshell")
+```
+
+###Quick Thematic Maps (qtm):
+```{r}
+# load spatial data included in the tmap package
+data("World", "metro")
+
+# Try typing head(World$...) or head(metro@...) to see the type of data...
+head(World@data)
+head(metro@data)
+
+#  quick plot example: 
+qtm(World, fill = "income_grp", text = "iso_a3", text.size = "AREA") # use "World$" to see the two attributes: income_grp and iso_a3, text.size= area: text is sized increasingly with coutry area size.
+
+```
+
+###MORE COMPLEX MAPPING
+
+For More Complex Maps use the main plotting method for readability
+```{r}
+# calculate annual growth rate
+metro$growth <- (metro$pop2020 - metro$pop2010) / (metro$pop2010 * 10) * 100
+
+# plot
+tm_shape(World) +
+	tm_polygons("income_grp", palette = "-Blues", 
+		title = "Income class", contrast = 0.7, border.col = "grey30", id = "name") +
+
+	tm_text("iso_a3", size = "AREA", col = "grey30", root=3) +
+
+  tm_shape(metro) +
+  tm_bubbles("pop2010", col = "growth", border.col = "black",
+		border.alpha = 0.5,
+		breaks = c(-Inf, 0, 2, 4, 6, Inf) ,
+		palette = "-RdYlGn",
+		title.size = "Metro population (2010)", 
+		title.col = "Annual growth rate (%)",
+		id = "name",
+		popup.vars=c("pop2010", "pop2020", "growth")) + 
+tm_format_World() + 
+tm_style_gray()
+
+```
+
+###INTERACTIVE VIEW MODE
+Interactive viewing with tmap
+```{r}
+tmap_mode("view") # sets the tmap mode to interactive viewing
+last_map() # returns the last map to be modified or created
+```

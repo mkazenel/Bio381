@@ -1,0 +1,62 @@
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="generator" content="R package animation 2.5">
+	<title>Normal Distribution</title>
+	<link rel="stylesheet" href="css/reset.css" />
+	<link rel="stylesheet" href="css/styles.css" />
+	<link rel="stylesheet" href="css/scianimator.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.3/styles/github.min.css">
+
+	<script src="js/jquery-1.4.4.min.js"></script>
+	<script src="js/jquery.scianimator.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.3/highlight.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.3/languages/r.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+</head>
+<body>
+
+	<div class="scianimator"><div id="density_normal_dist" style="display: inline-block;"></div></div>
+	<div class="scianimator" style="width: 600px; text-align: left"><pre><code class="r">## This animation plots the density functions of 150 draws of 100 values
+##   from a normally distributed random variable.
+library(animation)
+library(SNPRelate)
+library(gdsfmt)
+library(BiocInstaller)
+library(reshape2)
+library(MASS)
+library(ggplot2)
+library(gapminder)
+library(plyr)
+layout(matrix(c(1, rep(2, 5)), 6, 1))
+par(mar = c(3, 3, 1, 1) + 0.1)
+for (i in 1:150) {
+    chunk <- rnorm(100) + sqrt(abs((i) - 51))
+    par(fg = 1)
+    plot(-5, xlim = c(1, 150), ylim = c(0, 0.3), axes = F, 
+        xlab = "", ylab = "", main = "Iteration")
+    abline(v = i, lwd = 5, col = rgb(0, 0, 255, 255, maxColorValue = 255))
+    abline(v = i - 1, lwd = 5, col = rgb(0, 0, 255, 50, maxColorValue = 255))
+    abline(v = i - 2, lwd = 5, col = rgb(0, 0, 255, 25, maxColorValue = 255))
+    axis(1)
+    par(fg = col.range[mean(chunk) + 3])
+    plot(density(chunk), xlab = "x-value", xlim = c(-5, 15), 
+        ylim = c(0, 0.6))
+    abline(v = mean(chunk), col = rgb(255, 0, 0, 255, maxColorValue = 255))
+    if (exists("lastmean")) {
+        abline(v = lastmean, col = rgb(255, 0, 0, 50, maxColorValue = 255))
+        prevlastmean <- lastmean
+    }
+    lastmean <- mean(chunk)
+}
+## R version 3.3.2 (2016-10-31)
+## Platform: x86_64-apple-darwin13.4.0 (64-bit)
+## Other packages: animation 2.5, SNPRelate 1.6.6, gdsfmt 1.8.3, BiocInstaller
+## 1.22.3, reshape2 1.4.2, MASS 7.3-45, ggplot2 2.2.1, gapminder 0.2.0, plyr
+## 1.8.4</code></pre></div>
+	<script src="js/density_normal_dist.js"></script>
+<!-- highlight R code -->
+
+</body>
+</html>

@@ -1,0 +1,649 @@
+---
+output: 
+  beamer_presentation: 
+    colortheme: dolphin
+    incremental: yes
+---
+##
+\bigskip
+\huge Altitudinal gradients do not predict plant-symbiont responses to experimental warming     
+\bigskip
+\bigskip
+\LARGE Melanie Kazenel     
+\LARGE 3 May 2017 
+
+ \begin{picture}(320,250)
+ \put(140,150){\includegraphics[height=4.5cm]{/Users/mkazenel/Desktop/Bio381/Images/Mountain1.jpg}}
+ \put(00,50){\begin{minipage}[t]{1\linewidth}
+ \end{minipage}}
+ \end{picture}
+ 
+## How will climate change alter species interactions?
+ \begin{picture}(320,250)
+ \put(40,50){\includegraphics[height=6cm]{/Users/mkazenel/Desktop/Bio381/Images/Mountain2.jpg}}
+ \put(25,20){\begin{minipage}[t]{1\linewidth}
+ {}
+ \end{minipage}}
+ \end{picture}
+ 
+ ## Altitudinal Gradients and Experimental Warming
+  \begin{picture}(320,250)
+ \put(-5,40){\includegraphics[height=6cm]{/Users/mkazenel/Desktop/Bio381/Images/AltitudeWarming.jpg}}
+ \put(25,20){\begin{minipage}[t]{1\linewidth}
+ {}
+ \end{minipage}}
+ \end{picture}
+ 
+## Questions
+
+- How do fungal symbionts change with altitude and experimental warming?     
+- Do these changes correspond?     
+ 
+
+## Study System and Methods
+ 
+ \begin{picture}(320,250)
+ \put(15,30){\includegraphics[height=7cm]{/Users/mkazenel/Desktop/Bio381/Images/PlantSymbiont5.png}}
+ \put(25,20){\begin{minipage}[t]{1\linewidth}
+ {}
+ \end{minipage}}
+ \end{picture}
+
+## Statistics
+
+Linear Mixed Effects Models
+
+```{r,eval=FALSE}
+
+library(nlme)
+
+# Altitudinal Gradient Code
+alt <- lme(Colonization~Elevation*HostSpecies
+              *Year*JulianDay, data = altData, 
+              random = ~1|Gradient, method="ML")
+anova(alt)
+
+# Experimental Warming Code
+warm <- lme(Colonization~WarmingTreatment*HostSpecies
+               *Month, data = warmingData, 
+               random = ~1|Plot, method="ML")
+anova(warm)
+
+```
+
+
+## Statistics
+
+PERMANOVA
+
+```{r,eval=FALSE}
+
+library(vegan)
+
+adonis(formula = compMatrix~Elevation*HostSpecies
+       *Year*JulianDay*Gradient, data = envData, 
+       permutations = 999)
+
+```
+
+NMDS
+
+```{r,eval=FALSE}
+
+NMDS <- metaMDS(compMatrix, k=2, try=100, 
+                autotransform=TRUE)
+
+```
+
+
+## Results
+- Responses differed among plant species and fungal functional groups    
+- Little correspondence of altitude and warming trends    
+
+## Colonization of _Achnatherum lettermanii_ by arbuscular mycorrhizal fungi
+
+```{r, echo=FALSE,results='hide',fig.keep='all',message=FALSE}
+library(Rmisc)
+library(ggplot2)
+
+#read in data
+elevdata <- read.csv("~/Documents/**UNM/Elevation:Warming Work/Stats/ElevationColData.csv")
+
+#change variables to factors
+elevdata$Year <- as.factor(elevdata$Year)
+
+#ACLE colonization by AMF 
+#create dataset 
+dataAMF <- subset(elevdata,Year=="2012" | Year=="2014")
+dataAMF <- dataAMF[!is.na(dataAMF$Avg_AMFhyphae),] 
+ALdata <- dataAMF[ which(dataAMF$Spp_code=='AL'), ]
+
+p1 <- ggplot(ALdata, aes(x = Elevation, y = Avg_AMFhyphae))
+p1 <- p1 + geom_point(colour = "#9e9ac8", size = 5, shape = 16)
+p1 <- p1 + xlab("\n Elevation (m)")
+#p1 <- p1 + ylab("% Colonization \n")
+p1 <- p1 + ylab(NULL)
+p1 <- p1 + theme_bw() 
+p1 <- p1 + theme(text = element_text(size=25))
+p1 <- p1+ theme(panel.border = element_rect(colour = "black", fill=NA, size=1))
+p1 <- p1 + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+#p1 <- p1 + theme(panel.grid.minor = element_blank())
+p1 <- p1 + stat_smooth(method = "lm", formula = y ~ x, size = 0.65, colour = "black", se = FALSE)
+#p1 <- p1 + theme(axis.text.x = element_blank(),axis.ticks.x = element_blank())
+p1 <- p1 + theme(axis.text.y = element_text(size=20, colour = "black"))
+p1 <- p1 + theme(axis.text.x = element_text(size=20, colour = "black"))
+p1 <- p1 + xlim(2700, 3500)
+p1 <- p1 + ylim(0,100)
+p1 <- p1 + theme(axis.text.y = element_blank(),axis.ticks.y = element_blank())
+#p1 <- p1 + annotate("text", x = 2715, y = 95, label = "A", size = 10) 
+#print(p1)
+
+
+#AMF colonization, warming
+warmingdata <- read.csv("~/Documents/**UNM/Elevation:Warming Work/Stats/warmingdata.csv")
+warmingdata$pair <- as.factor(warmingdata$pair)
+ALwarming <- subset(warmingdata, hostspecies == "AL")
+
+summary <- summarySE(ALwarming, measurevar="AMFhyphae", groupvars=c("warmingtreatment"))
+summary
+
+summary$warmingtreatment <- factor(summary$warmingtreatment, levels = rev(levels(summary$warmingtreatment)))
+levels(summary$warmingtreatment)
+
+p2 <- ggplot(summary, aes(warmingtreatment, AMFhyphae))
+p2 <- p2 + geom_point(position=position_dodge(width=0.3), stat="identity", size = 5, shape = 16, colour=c("#ca0020","#0571b0")) 
+p2 <- p2 + geom_errorbar(aes(ymin=AMFhyphae-se, ymax=AMFhyphae+se),
+                       width=.1,position=position_dodge(.3))
+p2 <- p2 + xlab("\n  Treatment")
+p2 <- p2 + ylab("% Colonization \n")
+p2 <- p2 + theme_bw() 
+p2 <- p2+ theme(panel.border = element_rect(colour = "black", fill=NA, size=1))
+p2 <- p2 + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) 
+p2 <- p2+ theme(text = element_text(size=25))
+p2 <- p2 + theme(axis.text.x = element_text(size=20, colour = "black"))
+p2 <- p2 + theme(axis.text.y = element_text(size=20, colour = "black"))
+p2 <- p2 + theme(legend.position="none")
+#p2 <- p2 + theme(legend.title=element_blank())
+p2 <- p2 + scale_x_discrete(labels = c("Warmed", "Control"))
+p2 <- p2 + ylim(0,106)
+p2 <- p2 + scale_shape_manual(values=c(16,1))
+p2 <- p2+ theme(legend.key = element_blank())
+#p2 <- p2 + theme(legend.position = c(.84, .105),legend.background = element_rect(color = "black",size = 0.2))
+p2 <- p2 + annotate("text", x = 1.5, y = 80, label = "italic(P)==0.0385", parse = TRUE, size = 6) 
+#print(p2)
+
+library(gridExtra)
+grid.arrange(p2,p1, ncol=2)
+
+
+
+# multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
+#   library(grid)
+# 
+#   # Make a list from the ... arguments and plotlist
+#   plots <- c(list(...), plotlist)
+# 
+#   numPlots = length(plots)
+# 
+#   # If layout is NULL, then use 'cols' to determine layout
+#   if (is.null(layout)) {
+#     # Make the panel
+#     # ncol: Number of columns of plots
+#     # nrow: Number of rows needed, calculated from # of cols
+#     layout <- matrix(seq(1, cols * ceiling(numPlots/cols)),
+#                     ncol = cols, nrow = ceiling(numPlots/cols))
+#   }
+# 
+#  if (numPlots==1) {
+#     print(plots[[1]])
+# 
+#   } else {
+#     # Set up the page
+#     grid.newpage()
+#     pushViewport(viewport(layout = grid.layout(nrow(layout), ncol(layout))))
+# 
+#     # Make each plot, in the correct location
+#     for (i in 1:numPlots) {
+#       # Get the i,j matrix positions of the regions that contain this subplot
+#       matchidx <- as.data.frame(which(layout == i, arr.ind = TRUE))
+# 
+#       print(plots[[i]], vp = viewport(layout.pos.row = matchidx$row,
+#                                       layout.pos.col = matchidx$col))
+#     }
+#   }
+# }
+# 
+# multiplot(p2,p1, cols = 2)
+```
+
+
+
+## Colonization of _Achnatherum lettermanii_ by horizontally transmitted leaf fungi
+
+
+```{r, echo=FALSE,results='hide',fig.keep='all',message=FALSE}
+library(Rmisc)
+library(ggplot2)
+
+#read in data
+elevdata <- read.csv("~/Documents/**UNM/Elevation:Warming Work/Stats/ElevationColData.csv")
+
+#change variables to factors
+elevdata$Year <- as.factor(elevdata$Year)
+
+dataLFE <- subset(elevdata,Year=="2012" | Year=="2014")
+dataLFE <- dataLFE[!is.na(dataLFE$AvgOF),] 
+ALdataLFE <- dataLFE[ which(dataLFE$Spp_code=='AL'), ]
+ALdataLFE$OF <- (ALdataLFE$AvgOF*ALdataLFE$TotalFOV)
+
+p3 <- ggplot(ALdataLFE, aes(x = Elevation, y = OF))
+p3 <- p3 + geom_point(colour = "#9e9ac8", size = 5, shape = 16)
+p3 <- p3 + xlab("\n Elevation (m)")
+p3 <- p3 + ylab(NULL)
+#p3 <- p3 + ylab("% Symbiotic Individuals \n")
+p3 <- p3 + theme_bw() 
+p3 <- p3 + theme(panel.border = element_rect(colour = "black", fill=NA, size=1))
+p3 <- p3 + theme(text = element_text(size=25))
+p3 <- p3 + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) 
+p3 <- p3 + stat_smooth(method = "lm", formula = y ~ x, size = 0.65, colour = "black", se = FALSE)
+#p3 <- p3 + theme(axis.text.x = element_blank(),axis.ticks.x = element_blank())
+p3 <- p3 + theme(axis.text.y = element_text(size=20, colour = "black"))
+p3 <- p3 + theme(axis.text.x = element_text(size=20, colour = "black"))
+p3 <- p3 + xlim(2700, 3500)
+p3 <- p3 + ylim(0,100)
+p3 <- p3 + theme(axis.text.y = element_blank(),axis.ticks.y = element_blank())
+p3 <- p3 + annotate("text", x = 2790, y = 9, label = "italic(P)==0.0094", parse = TRUE, size = 6) 
+p3 <- p3 + annotate("text", x = 2790, y = 2, label = "italic(r^2)==0.69", parse = TRUE, size = 6) 
+
+#print(p3)
+
+
+#LFE colonization, warming
+warmingdata <- read.csv("~/Documents/**UNM/Elevation:Warming Work/Stats/warmingdata.csv")
+warmingdata$pair <- as.factor(warmingdata$pair)
+ALwarming <- subset(warmingdata, hostspecies == "AL")
+
+summary <- summarySE(ALwarming, measurevar="meanother", groupvars=c("warmingtreatment"))
+summary
+
+summary$warmingtreatment <- factor(summary$warmingtreatment, levels = rev(levels(summary$warmingtreatment)))
+levels(summary$warmingtreatment)
+
+p4 <- ggplot(summary, aes(warmingtreatment, meanother))
+p4 <- p4 + geom_point(position=position_dodge(width=0.3), stat="identity", size = 5, shape = 16, colour=c("#ca0020","#0571b0")) 
+p4 <- p4 + geom_errorbar(aes(ymin=meanother-se, ymax=meanother+se),
+                       width=.1,position=position_dodge(.3))
+p4 <- p4 + xlab("\n  Treatment")
+p4 <- p4 + ylab("% Colonization \n")
+p4 <- p4 + theme_bw() 
+p4 <- p4+ theme(panel.border = element_rect(colour = "black", fill=NA, size=1))
+p4 <- p4 + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) 
+p4 <- p4+ theme(text = element_text(size=25))
+p4 <- p4 + theme(axis.text.x = element_text(size=20, colour = "black"))
+p4 <- p4 + theme(axis.text.y = element_text(size=20, colour = "black"))
+p4 <- p4 + theme(legend.title=element_blank())
+p4 <- p4 + scale_x_discrete(labels = c("Warmed", "Control"))
+p4 <- p4 + ylim(0,100)
+p4 <- p4 + scale_shape_manual(values=c(16,1))
+p4 <- p4+ theme(legend.key = element_blank())
+#print(p4)
+
+grid.arrange(p4,p3, ncol=2)
+
+# multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
+#   library(grid)
+# 
+#   # Make a list from the ... arguments and plotlist
+#   plots <- c(list(...), plotlist)
+# 
+#   numPlots = length(plots)
+# 
+#   # If layout is NULL, then use 'cols' to determine layout
+#   if (is.null(layout)) {
+#     # Make the panel
+#     # ncol: Number of columns of plots
+#     # nrow: Number of rows needed, calculated from # of cols
+#     layout <- matrix(seq(1, cols * ceiling(numPlots/cols)),
+#                     ncol = cols, nrow = ceiling(numPlots/cols))
+#   }
+# 
+#  if (numPlots==1) {
+#     print(plots[[1]])
+# 
+#   } else {
+#     # Set up the page
+#     grid.newpage()
+#     pushViewport(viewport(layout = grid.layout(nrow(layout), ncol(layout))))
+# 
+#     # Make each plot, in the correct location
+#     for (i in 1:numPlots) {
+#       # Get the i,j matrix positions of the regions that contain this subplot
+#       matchidx <- as.data.frame(which(layout == i, arr.ind = TRUE))
+# 
+#       print(plots[[i]], vp = viewport(layout.pos.row = matchidx$row,
+#                                       layout.pos.col = matchidx$col))
+#     }
+#   }
+# }
+# 
+# multiplot(p4,p3, cols = 2)
+```
+
+
+## Colonization of _Festuca thurberi_ by vertically transmitted leaf fungi
+
+```{r, echo=FALSE,results='hide',fig.keep='all',message=FALSE,warning=FALSE}
+library(Rmisc)
+library(ggplot2)
+
+#read in data
+elevdata <- read.csv("~/Documents/**UNM/Elevation:Warming Work/Stats/ElevationColData.csv")
+
+#change variables to factors
+elevdata$Year <- as.factor(elevdata$Year)
+
+data2 <- subset(elevdata, Year=="2008" | Year=="2009" | Year=="2011" | Year=="2012" | Year=="2014")
+data2 <- data2[!is.na(data2$AvgEndo),]  
+FTdata <- data2[ which(data2$Spp_code=='FT'), ]
+FTdata$Endo <- (FTdata$AvgEndo*FTdata$TotalFOV)
+
+p3 <- ggplot(FTdata, aes(x = Elevation, y = Endo))
+p3 <- p3 + geom_point(colour = "#9e9ac8", size = 5, shape = 16)
+p3 <- p3 + xlab("\n Elevation (m)")
+p3 <- p3 + ylab(NULL)
+#p3 <- p3 + ylab("% Symbiotic Individuals \n")
+p3 <- p3 + theme_bw() 
+p3 <- p3 + theme(panel.border = element_rect(colour = "black", fill=NA, size=1))
+p3 <- p3 + theme(text = element_text(size=25))
+p3 <- p3 + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) 
+p3 <- p3 + stat_smooth(method = "lm", formula = y ~ x, size = 0.65, colour = "black", se = FALSE)
+#p3 <- p3 + theme(axis.text.x = element_blank(),axis.ticks.x = element_blank())
+p3 <- p3 + theme(axis.text.y = element_text(size=20, colour = "black"))
+p3 <- p3 + theme(axis.text.x = element_text(size=20, colour = "black"))
+p3 <- p3 + xlim(2700, 3500)
+p3 <- p3 + ylim(0,100)
+p3 <- p3 + theme(axis.text.y = element_blank(),axis.ticks.y = element_blank())
+p3 <- p3 + annotate("text", x = 3400, y = 90, label = "italic(P)==0.0023", parse = TRUE, size = 6) 
+p3 <- p3 + annotate("text", x = 3400, y = 83, label = "italic(r^2)==0.33", parse = TRUE, size = 6) 
+
+#print(p3)
+
+
+
+#Epicolonization, warming
+warmingdata <- read.csv("~/Documents/**UNM/Elevation:Warming Work/Stats/warmingdata.csv")
+warmingdata$pair <- as.factor(warmingdata$pair)
+FTwarming <- subset(warmingdata, hostspecies == "FT")
+
+summary <- summarySE(FTwarming, measurevar="meanepi", groupvars=c("warmingtreatment"))
+summary
+
+summary$warmingtreatment <- factor(summary$warmingtreatment, levels = rev(levels(summary$warmingtreatment)))
+levels(summary$warmingtreatment)
+
+p4 <- ggplot(summary, aes(warmingtreatment, meanepi))
+p4 <- p4 + geom_point(position=position_dodge(width=0.3), stat="identity", size = 5, shape = 16, colour=c("#ca0020","#0571b0")) 
+p4 <- p4 + geom_errorbar(aes(ymin=meanepi-se, ymax=meanepi+se),
+                       width=.1,position=position_dodge(.3))
+p4 <- p4 + xlab("\n  Treatment")
+p4 <- p4 + ylab("% Colonization \n")
+p4 <- p4 + theme_bw() 
+p4 <- p4+ theme(panel.border = element_rect(colour = "black", fill=NA, size=1))
+p4 <- p4 + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) 
+p4 <- p4+ theme(text = element_text(size=25))
+p4 <- p4 + theme(axis.text.x = element_text(size=20, colour = "black"))
+p4 <- p4 + theme(axis.text.y = element_text(size=20, colour = "black"))
+p4 <- p4 + theme(legend.title=element_blank())
+p4 <- p4 + scale_x_discrete(labels = c("Warmed", "Control"))
+p4 <- p4 + ylim(0,100)
+p4 <- p4 + scale_shape_manual(values=c(16,1))
+p4 <- p4+ theme(legend.key = element_blank())
+#p4 <- p4 + theme(legend.position = c(.84, .105),legend.background = element_rect(color = "black",size = 0.2))
+p4 <- p4 + annotate("text", x = 1.5, y = 50, label = "italic(P)==0.0673", parse = TRUE, size = 6) 
+
+#print(p4)
+
+grid.arrange(p4,p3, ncol=2)
+
+# multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
+#   library(grid)
+# 
+#   # Make a list from the ... arguments and plotlist
+#   plots <- c(list(...), plotlist)
+# 
+#   numPlots = length(plots)
+# 
+#   # If layout is NULL, then use 'cols' to determine layout
+#   if (is.null(layout)) {
+#     # Make the panel
+#     # ncol: Number of columns of plots
+#     # nrow: Number of rows needed, calculated from # of cols
+#     layout <- matrix(seq(1, cols * ceiling(numPlots/cols)),
+#                     ncol = cols, nrow = ceiling(numPlots/cols))
+#   }
+# 
+#  if (numPlots==1) {
+#     print(plots[[1]])
+# 
+#   } else {
+#     # Set up the page
+#     grid.newpage()
+#     pushViewport(viewport(layout = grid.layout(nrow(layout), ncol(layout))))
+# 
+#     # Make each plot, in the correct location
+#     for (i in 1:numPlots) {
+#       # Get the i,j matrix positions of the regions that contain this subplot
+#       matchidx <- as.data.frame(which(layout == i, arr.ind = TRUE))
+# 
+#       print(plots[[i]], vp = viewport(layout.pos.row = matchidx$row,
+#                                       layout.pos.col = matchidx$col))
+#     }
+#   }
+# }
+# 
+# multiplot(p4,p3, cols = 2)
+```
+
+
+## Possible Explanations for Lack of Correspondence in Altitude and Warming Trends
+
+- Factors other than temperature drive altitudinal patterns    
+- Gradients captured a broader range of temperatures    
+- In different parts of their ranges, organisms can respond differently to warming    
+- Experimental warming represents an immediate step change in temperature    
+
+
+
+## Fungal community composition did not respond to altitude or warming
+
+```{r, echo=FALSE,results='hide',fig.keep='all',message=FALSE,warning=FALSE}
+
+# ROOTS
+# library(vegan)
+# z <- read.csv("WarmingRoots.csv")
+# z$Sample <- NULL
+# NMDS <- metaMDS(z, k=2, trymax=100, autotransform=TRUE)
+# 
+# library(ggplot2)
+# scores <- as.data.frame(scores(NMDS))
+# env <- read.csv("WarmingEnv.csv")
+# envRoots <- subset(env,TissueType=="Rts")
+# scores$warming <- envRoots$WarmingTreatment
+# scores$date <- envRoots$CollectionDate
+# print(scores)
+
+#write.csv(scores,"scores.csv")
+
+scores <- read.csv("scores.csv")
+
+scores$warming <- factor(scores$warming, levels = rev(levels(scores$warming)))
+levels(scores$warming)
+
+#####p4 <- ggplot(summary, aes(warmingtreatment, meanepi))
+####p4 <- p4 + geom_point(position=position_dodge(width=0.3), stat="identity", size = 5, ####shape = 16, colour=c("#ca0020","#0571b0")) 
+
+
+p <- ggplot(scores, aes(NMDS1, NMDS2, colour=warming))
+p <- p + geom_point(size = 5, shape = 16)
+p <- p + theme_bw() 
+p <- p + theme(panel.border = element_rect(colour = "black", fill=NA, size=1))
+p <- p + theme(text = element_text(size=25))
+p <- p + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) 
+p <- p + theme(axis.text.y = element_text(size=20, colour = "black"))
+p <- p + theme(axis.text.x = element_text(size=20, colour = "black"))
+p <- p + theme(legend.title=element_blank())
+#p <- p + theme(legend.position = "none")
+p <- p + ggtitle("Root Fungi")
+p <- p + theme(legend.position="none")
+p <- p + xlim(-1.5,1.5)
+p <- p + ylim(-1.5,1.5)
+#p4 <- p4 + theme(legend.key = element_blank())
+#p <- p + theme(legend.background = element_rect(color = "black",size = 0.2)) #legend.position = c(.9, .785),
+#print(p)
+
+
+#LEAVES 
+
+# z2 <- read.csv("WarmingLeaves.csv")
+# z2$Sample <- NULL
+# NMDSleaves <- metaMDS(z2, k=2, trymax=100, autotransform=TRUE)
+# 
+# scoresLeaves <- as.data.frame(scores(NMDSleaves))
+# env <- read.csv("WarmingEnv.csv")
+# envLeaves <- subset(env,TissueType=="Lvs")
+# scoresLeaves$warming <- envLeaves$WarmingTreatment
+# scoresLeaves$date <- envLeaves$CollectionDate
+# print(scoresLeaves)
+
+# write.csv(scoresLeaves,"scoresLeaves.csv")
+
+scoresLeaves <- read.csv("scoresLeaves.csv")
+
+scoresLeaves$warming <- factor(scoresLeaves$warming, levels = rev(levels(scoresLeaves$warming)))
+levels(scoresLeaves$warming)
+
+p2 <- ggplot(scoresLeaves, aes(x = NMDS1, y = NMDS2, colour=warming))
+p2 <- p2 + geom_point(size = 5, shape = 16)
+p2 <- p2 + theme_bw() 
+p2 <- p2 + theme(panel.border = element_rect(colour = "black", fill=NA, size=1))
+p2 <- p2 + theme(text = element_text(size=25))
+p2 <- p2 + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) 
+p2 <- p2 + theme(axis.text.y = element_text(size=20, colour = "black"))
+p2 <- p2 + theme(axis.text.x = element_text(size=20, colour = "black"))
+p2 <- p2 + theme(legend.title=element_blank())
+p2 <- p2 + ggtitle("Leaf Fungi")
+p2 <- p2 + xlim(-1.5,1.5)
+p2 <- p2 + ylim(-1.5,1.5)
+#p4 <- p4 + theme(legend.key = element_blank())
+#p <- p + theme(legend.background = element_rect(color = "black",size = 0.2)) #legend.position = c(.9, .785),
+#print(p2)
+
+library(gridExtra)
+# get_legend<-function(myggplot){
+#   tmp <- ggplot_gtable(ggplot_build(myggplot))
+#   leg <- which(sapply(tmp$grobs, function(x) x$name) == "guide-box")
+#   legend <- tmp$grobs[[leg]]
+#   return(legend)
+# }
+# legend <- get_legend(p)
+#p <- p + theme(legend.position="none")
+#p2 <- p2 + theme(legend.position="none")
+
+grid.arrange(p, p2, ncol=2, widths=c(2,2.75), heights=c(2,2))
+
+#multiplot(p,p2,cols=2)
+
+```
+
+
+
+
+## Fungal community composition varied across the growing season
+
+```{r, echo=FALSE,results='hide',fig.keep='all',message=FALSE,warning=FALSE}
+
+# ROOTS by date
+
+scores <- read.csv("scores.csv")
+
+p1 <- ggplot(scores, aes(x = NMDS1, y = NMDS2, colour=date))
+p1 <- p1 + geom_point(size = 5, shape = 16)
+p1 <- p1 + scale_color_brewer(palette="Set2")
+#p <- p + xlab("\n Elevation (m)")
+#p <- p + ylab("% Symbiotic Individuals \n")
+p1 <- p1 + theme_bw() 
+p1 <- p1 + theme(panel.border = element_rect(colour = "black", fill=NA, size=1))
+p1 <- p1 + theme(text = element_text(size=25))
+p1 <- p1 + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) 
+p1 <- p1 + theme(axis.text.y = element_text(size=20, colour = "black"))
+p1 <- p1 + theme(axis.text.x = element_text(size=20, colour = "black"))
+p1 <- p1 + theme(legend.title=element_blank())
+p1 <- p1 + ggtitle("Root Fungi")
+p1 <- p1 + theme(legend.position="none")
+p1 <- p1 + xlim(-1.5,1.5)
+p1 <- p1 + ylim(-1.5,1.5)
+p1 <- p1 + annotate("text", x = 1, y = -1.3, label = "italic(P)<0.001", parse = TRUE, size = 6) 
+#p4 <- p4 + theme(legend.key = element_blank())
+#p <- p + theme(legend.background = element_rect(color = "black",size = 0.2)) #legend.position = c(.9, .785),
+#print(p1)
+
+
+# Leaves by date
+
+scoresLeaves <- read.csv("scoresLeaves.csv")
+
+p <- ggplot(scoresLeaves, aes(x = NMDS1, y = NMDS2, colour=date))
+p <- p + geom_point(size = 5, shape = 16)
+p <- p + scale_color_brewer(palette="Set2")
+#p <- p + xlab("\n Elevation (m)")
+#p <- p + ylab("% Symbiotic Individuals \n")
+p <- p + theme_bw() 
+p <- p + theme(panel.border = element_rect(colour = "black", fill=NA, size=1))
+p <- p + theme(text = element_text(size=25))
+p <- p + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) 
+p <- p + theme(axis.text.y = element_text(size=20, colour = "black"))
+p <- p + theme(axis.text.x = element_text(size=20, colour = "black"))
+p <- p + theme(legend.title=element_blank())
+p <- p + ggtitle("Leaf Fungi")
+p <- p + xlim(-1.5,1.5)
+p <- p + ylim(-1.5,1.5)
+p <- p + annotate("text", x = 1, y = -1.3, label = "italic(P)<0.001", parse = TRUE, size = 6) 
+#p4 <- p4 + theme(legend.key = element_blank())
+#p <- p + theme(legend.background = element_rect(color = "black",size = 0.2)) #legend.position = c(.9, .785),
+#print(p)
+
+grid.arrange(p1, p, ncol=2, widths=c(2,2.9), heights=c(2,2))
+
+#multiplot(p1,p,cols=2)
+
+```
+
+
+## Conclusions
+
+- Responses of symbioses to climate change will differ among plant species and fungal functional groups    
+- Little correspondence of altitude and warming patterns    
+- Climate change may affect fungal colonization more strongly than composition    
+- Potential for phenological mismatches under climate change    
+
+## Acknowledgments
+>- Jennifer Rudgers    
+>- D. Lee Taylor, Cristina Takacs-Vesbach    
+>- Stephanie Kivlin     
+>- Joshua Lynn    
+>- Rocky Mountain Biological Laboratory and University of New Mexico undergraduates    
+\bigskip
+>- National Science Foundation (DEB-1354972)    
+>- Rocky Mountain Biological Laboratory (NSF DBI-0753774 and OIA-0963529)    
+>- University of New Mexico Department of Biology    
+
+
+## Questions?
+\bigskip
+  \begin{picture}(320,250)
+ \put(50,30){\includegraphics[height=7.5cm]{/Users/mkazenel/Desktop/Bio381/Images/FinalPhoto.png}}
+ \put(20,40){\begin{minipage}[t]{1\linewidth}
+ {}
+ \end{minipage}}
+ \end{picture} 
+ 

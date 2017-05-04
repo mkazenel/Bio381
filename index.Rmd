@@ -12,7 +12,7 @@ output:
 
 ##Assignments
 
-* Assignment 1   
+* Assignment 1 - GitHub and Portfolio Creation
 * [Assignment 2](Homework02.html)  
 * [Assignment 3](Homework003.html)   
 * [Assignment 4](Homework04.html)   
@@ -20,9 +20,13 @@ output:
 * [Assignments 6](Homework06.html)   
 * [Assignment 8](Homework08.html)   
 * [Assignment 9](Homework09.html)   
+* [Assignment 10](Homework10.html)   
 
-##R tutorial
+##R Presentation
 ['plyr' tutorial](plyr_tutorial.html)
+
+##Research Presentation
+[Altitudinal gradients do not predict plant-symbiont responses to experimental warming](KazenelResearchPresentation.pdf)
 
 ##Other Links
 

@@ -8,7 +8,7 @@ output:
     highlight: github
 ---
 
-## 1. Using a for or while loop, write a function to calculate the number of zeroes in a numeric vector.
+### 1. Using a for or while loop, write a function to calculate the number of zeroes in a numeric vector.
 
 ```{r}
 myDat <- c(0,2,7,9,0,0,3,0,0)
@@ -21,52 +21,185 @@ for (i in seq_along(myDat)) {
 sum(emptyVec)
 ```
 
-## 2. Use subsetting instead of a loop to rewrite the function as a single line of code.
+### 2. Use subsetting instead of a loop to rewrite the function as a single line of code.
 
 ```{r}
 myDat <- c(0,2,7,9,0,0,3,0,0)
 length(myDat[myDat==0])
 ```
 
-## 3. Write a function that takes as input a numeric vector, and returns as output the maximum difference between all possible pairs of elements. Be careful to ensure that your function works properly with both negative and positive numbers. For your first version of the function, create a vector that stores all possible pairwise differences and then extracts the maximum value from that list.
+### 3. Write a function that takes as input a numeric vector, and returns as output the maximum difference between all possible pairs of elements. Be careful to ensure that your function works properly with both negative and positive numbers. For your first version of the function, create a vector that stores all possible pairwise differences and then extracts the maximum value from that list.
 
 ```{r}
 ################################################################################
 # FUNCTION: max_diff
-# one line description
-# input: x
-# output: x
+# Takes a numeric vector as input and calculates the maximum difference between all possible pairs of elements
+# input: Numeric vector
+# output: Vector containing maximum difference between all possible pairs of elements (single value)
 #-------------------------------------------------------------------------------
 max_diff <- function(x=c(2,-10,8,5,-3)){
+    
+  matrix <- matrix(numeric(length(x)^2), nrow=length(x))
   
-  cols <- rep(0,length(x)^2)
-  x_pairs <- data.frame(cols,cols)
-  counter <- 0
-  
-  for(i in 1:length(x)) {
-    for(j in 1:length(x)) {
-      counter <- counter + 1
-      iter_pairs <- c(x[i],x[j])
-      x_pairs[counter,] <- iter_pairs
+  for(i in seq_along(x)) {
+    for(j in seq_along(x)) {
+      
+      matrix[i,j] <- abs(x[i]-x[j])
+      
     }
   } 
   
-  diff <- abs(x_pairs[,1] - x_pairs[,2])
-  return(max(diff))
+  vector <- c(matrix)
+  return(max(vector))
 }
   
 max_diff()
+```
 
 
 
+### 4. Now modify the output of (3) to yield a list with 3 elements. The first list item is the pair of vector values that are the maximum distance apart, the second list item is the pair of numbers representing the position of these elements in the vector, and the third list item is the maximum distance calculated from this pair.
 
 
-# WHAT WE TRIED THAT DIDN'T WORK
-for (i in 1:(length(x)-1)){
-  if (i < (length(x)-1))
-    z <- x[i]- x[i+1:length(x)]
+```{r}
+################################################################################
+# FUNCTION: max_diff_2
+# Takes a numeric vector as input and calculates the maximum difference between all possible pairs of elements
+# input: Numeric vector
+# output: List containing the pair of vector values that are the maximum distance apart, the pair of numbers representing the position of these elements in the vector, and the maximum difference calculated for this pair
+#-------------------------------------------------------------------------------
+max_diff_2 <- function(x=c(2,-10,8,5,-3)){
+    
+  matrix <- matrix(numeric(length(x)^2), nrow=length(x))
+  
+  for(i in seq_along(x)) {
+    for(j in seq_along(x)) {
+      
+      matrix[i,j] <- x[i]-x[j]
+      
+    }
+  } 
+  
+  vector <- c(matrix)
+  values <- c(min(x),max(x))
+  position <- c(which(x==min(x)),which(x==max(x)))
+  maxDiff <- max(abs(vector))
+  
+  return(list(values,position,maxDiff))
 }
-print(z)
+  
+max_diff_2()
+```
+
+
+### 5. For a second version of (3), store only a temp variable that keeps track of each difference and then retains only the largest difference as it cycles through the pairwise differences.
+
+```{r}
+################################################################################
+# FUNCTION: max_diff_3
+# Takes a numeric vector as input and calculates the maximum difference between all possible pairs of elements
+# input: Numeric vector
+# output: Vector containing maximum difference between all possible pairs of elements (single value)
+#-------------------------------------------------------------------------------
+max_diff_3 <- function(x=c(2,-10,8,5,-3)){
+    
+  matrix <- matrix(numeric(length(x)^2), nrow=length(x))
+  maxDiff <- 0
+  
+  for(i in seq_along(x)) {
+    for(j in seq_along(x)) {
+      
+      if(abs(x[i]-x[j]) >= maxDiff) {
+        maxDiff <- abs(x[i]-x[j])
+      }
+  
+    }
+  } 
+  
+  return(maxDiff)
+}
+  
+max_diff_3()
+```
+
+
+### 6. Write a function that takes as input two matrices, and then multiplies them together, using the rules of matrix multiplication. Your function should return a warning if the input matrices are not of the correct dimensions for matrix multiplication. Check the performance of your function by comparing with the built in R function for matrix multiplication %*%.
+
+```{r}
+################################################################################
+# FUNCTION: mat_mult
+# Performs matrix multiplication
+# input: Two matrices
+# output: New matrix resulting from multiplying the two input matrices
+#-------------------------------------------------------------------------------
+
+m1 <- matrix(c(1:6),2,3,byrow=TRUE)
+m2 <- matrix(c(7:12),3,2,byrow=TRUE)
+
+mat_mult <- function(m1,m2) {
+  
+    m3 <- matrix(0,nrow(m1), ncol(m2))
+    
+    if (nrow(m1) != ncol(m2)){
+    cat("Error: input matrices are not of the correct dimensions for matrix multiplication", "\n")
+  } else{
+    for (i in 1:nrow(m1)){
+      for (j in 1:ncol(m2)){
+        x <- sum(m1[i,]*m2[,j])
+        m3[i,j] = x
+      }
+    }
+  }
+    
+return(m3)
+}
+
+# Test the function
+mat_mult(m1,m2)
+
+# Compare to built-in R function
+m1 %*% m2
+
+# Test the function on matrices of incorrect dimensions
+m1 <- matrix(c(1:6),2,3,byrow=TRUE)
+m2 <- matrix(c(7:12),2,3,byrow=TRUE)
+mat_mult(m1,m2)
+
+```
+
+
+### 7. Write a function that takes as input two integers representing the number of rows and columns in a matrix. The output is a matrix of these dimensions in which each element is the product of the row number x the column number.
+
+```{r}
+
+################################################################################
+# FUNCTION: mat_dim
+# Takes two integers representing the number of rows and columns in a matrix, and creates a matrix in which each element is the product of the row number and the column number
+# input: nrow = number of rows in a matrix, ncol = number of columns in a matrix
+# output: Matrix of row number x column number products
+#-------------------------------------------------------------------------------
+
+mat_dim <- function(nrow=2,ncol=3) {
+  
+  m <- matrix(0,nrow, ncol)
+  
+  for (i in 1:nrow(m)){
+      for (j in 1:ncol(m)){
+        m[i,j] = i*j
+      }
+    }
+      
+return(m)
+}
+
+mat_dim()
+
+# Test function on a sample matrix
+m1 <- matrix(c(1:6),3,2,byrow=TRUE)
+x <- nrow(m1)
+y <- ncol(m1)
+mat_dim(x,y)
+  
 ```
 
 

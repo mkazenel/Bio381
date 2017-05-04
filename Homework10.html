@@ -17,6 +17,44 @@
 
 
 
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
 
 
 
@@ -46,8 +84,202 @@
 
 <div id="post">
 <article class="post-content">
-<div id="using-a-for-or-while-loop-write-a-function-to-calculate-the-number-of-zeroes-in-a-numeric-vector." class="section level2">
-<h2>1. Using a for or while loop, write a function to calculate the number of zeroes in a numeric vector.</h2>
+<div id="using-a-for-or-while-loop-write-a-function-to-calculate-the-number-of-zeroes-in-a-numeric-vector." class="section level3">
+<h3>1. Using a for or while loop, write a function to calculate the number of zeroes in a numeric vector.</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">myDat &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">2</span>,<span class="dv">7</span>,<span class="dv">9</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">3</span>,<span class="dv">0</span>,<span class="dv">0</span>)
+emptyVec &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="dt">mode=</span><span class="st">&quot;numeric&quot;</span>)
+
+<span class="cf">for</span> (i <span class="cf">in</span> <span class="kw">seq_along</span>(myDat)) {
+  <span class="cf">if</span> (myDat[i]<span class="op">==</span><span class="dv">0</span>) emptyVec[i] &lt;-<span class="st"> </span><span class="dv">1</span> <span class="cf">else</span>
+    emptyVec[i] &lt;-<span class="st"> </span><span class="dv">0</span>
+}
+<span class="kw">sum</span>(emptyVec)</code></pre></div>
+<pre><code>## [1] 5</code></pre>
+</div>
+<div id="use-subsetting-instead-of-a-loop-to-rewrite-the-function-as-a-single-line-of-code." class="section level3">
+<h3>2. Use subsetting instead of a loop to rewrite the function as a single line of code.</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">myDat &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">2</span>,<span class="dv">7</span>,<span class="dv">9</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">3</span>,<span class="dv">0</span>,<span class="dv">0</span>)
+<span class="kw">length</span>(myDat[myDat<span class="op">==</span><span class="dv">0</span>])</code></pre></div>
+<pre><code>## [1] 5</code></pre>
+</div>
+<div id="write-a-function-that-takes-as-input-a-numeric-vector-and-returns-as-output-the-maximum-difference-between-all-possible-pairs-of-elements.-be-careful-to-ensure-that-your-function-works-properly-with-both-negative-and-positive-numbers.-for-your-first-version-of-the-function-create-a-vector-that-stores-all-possible-pairwise-differences-and-then-extracts-the-maximum-value-from-that-list." class="section level3">
+<h3>3. Write a function that takes as input a numeric vector, and returns as output the maximum difference between all possible pairs of elements. Be careful to ensure that your function works properly with both negative and positive numbers. For your first version of the function, create a vector that stores all possible pairwise differences and then extracts the maximum value from that list.</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">################################################################################
+<span class="co"># FUNCTION: max_diff</span>
+<span class="co"># Takes a numeric vector as input and calculates the maximum difference between all possible pairs of elements</span>
+<span class="co"># input: Numeric vector</span>
+<span class="co"># output: Vector containing maximum difference between all possible pairs of elements (single value)</span>
+<span class="co">#-------------------------------------------------------------------------------</span>
+max_diff &lt;-<span class="st"> </span><span class="cf">function</span>(<span class="dt">x=</span><span class="kw">c</span>(<span class="dv">2</span>,<span class="op">-</span><span class="dv">10</span>,<span class="dv">8</span>,<span class="dv">5</span>,<span class="op">-</span><span class="dv">3</span>)){
+    
+  matrix &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">numeric</span>(<span class="kw">length</span>(x)<span class="op">^</span><span class="dv">2</span>), <span class="dt">nrow=</span><span class="kw">length</span>(x))
+  
+  <span class="cf">for</span>(i <span class="cf">in</span> <span class="kw">seq_along</span>(x)) {
+    <span class="cf">for</span>(j <span class="cf">in</span> <span class="kw">seq_along</span>(x)) {
+      
+      matrix[i,j] &lt;-<span class="st"> </span><span class="kw">abs</span>(x[i]<span class="op">-</span>x[j])
+      
+    }
+  } 
+  
+  vector &lt;-<span class="st"> </span><span class="kw">c</span>(matrix)
+  <span class="kw">return</span>(<span class="kw">max</span>(vector))
+}
+  
+<span class="kw">max_diff</span>()</code></pre></div>
+<pre><code>## [1] 18</code></pre>
+</div>
+<div id="now-modify-the-output-of-3-to-yield-a-list-with-3-elements.-the-first-list-item-is-the-pair-of-vector-values-that-are-the-maximum-distance-apart-the-second-list-item-is-the-pair-of-numbers-representing-the-position-of-these-elements-in-the-vector-and-the-third-list-item-is-the-maximum-distance-calculated-from-this-pair." class="section level3">
+<h3>4. Now modify the output of (3) to yield a list with 3 elements. The first list item is the pair of vector values that are the maximum distance apart, the second list item is the pair of numbers representing the position of these elements in the vector, and the third list item is the maximum distance calculated from this pair.</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">################################################################################
+<span class="co"># FUNCTION: max_diff_2</span>
+<span class="co"># Takes a numeric vector as input and calculates the maximum difference between all possible pairs of elements</span>
+<span class="co"># input: Numeric vector</span>
+<span class="co"># output: List containing the pair of vector values that are the maximum distance apart, the pair of numbers representing the position of these elements in the vector, and the maximum difference calculated for this pair</span>
+<span class="co">#-------------------------------------------------------------------------------</span>
+max_diff_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="cf">function</span>(<span class="dt">x=</span><span class="kw">c</span>(<span class="dv">2</span>,<span class="op">-</span><span class="dv">10</span>,<span class="dv">8</span>,<span class="dv">5</span>,<span class="op">-</span><span class="dv">3</span>)){
+    
+  matrix &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">numeric</span>(<span class="kw">length</span>(x)<span class="op">^</span><span class="dv">2</span>), <span class="dt">nrow=</span><span class="kw">length</span>(x))
+  
+  <span class="cf">for</span>(i <span class="cf">in</span> <span class="kw">seq_along</span>(x)) {
+    <span class="cf">for</span>(j <span class="cf">in</span> <span class="kw">seq_along</span>(x)) {
+      
+      matrix[i,j] &lt;-<span class="st"> </span>x[i]<span class="op">-</span>x[j]
+      
+    }
+  } 
+  
+  vector &lt;-<span class="st"> </span><span class="kw">c</span>(matrix)
+  values &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">min</span>(x),<span class="kw">max</span>(x))
+  position &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">which</span>(x<span class="op">==</span><span class="kw">min</span>(x)),<span class="kw">which</span>(x<span class="op">==</span><span class="kw">max</span>(x)))
+  maxDiff &lt;-<span class="st"> </span><span class="kw">max</span>(<span class="kw">abs</span>(vector))
+  
+  <span class="kw">return</span>(<span class="kw">list</span>(values,position,maxDiff))
+}
+  
+<span class="kw">max_diff_2</span>()</code></pre></div>
+<pre><code>## [[1]]
+## [1] -10   8
+## 
+## [[2]]
+## [1] 2 3
+## 
+## [[3]]
+## [1] 18</code></pre>
+</div>
+<div id="for-a-second-version-of-3-store-only-a-temp-variable-that-keeps-track-of-each-difference-and-then-retains-only-the-largest-difference-as-it-cycles-through-the-pairwise-differences." class="section level3">
+<h3>5. For a second version of (3), store only a temp variable that keeps track of each difference and then retains only the largest difference as it cycles through the pairwise differences.</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">################################################################################
+<span class="co"># FUNCTION: max_diff_3</span>
+<span class="co"># Takes a numeric vector as input and calculates the maximum difference between all possible pairs of elements</span>
+<span class="co"># input: Numeric vector</span>
+<span class="co"># output: Vector containing maximum difference between all possible pairs of elements (single value)</span>
+<span class="co">#-------------------------------------------------------------------------------</span>
+max_diff_<span class="dv">3</span> &lt;-<span class="st"> </span><span class="cf">function</span>(<span class="dt">x=</span><span class="kw">c</span>(<span class="dv">2</span>,<span class="op">-</span><span class="dv">10</span>,<span class="dv">8</span>,<span class="dv">5</span>,<span class="op">-</span><span class="dv">3</span>)){
+    
+  matrix &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">numeric</span>(<span class="kw">length</span>(x)<span class="op">^</span><span class="dv">2</span>), <span class="dt">nrow=</span><span class="kw">length</span>(x))
+  maxDiff &lt;-<span class="st"> </span><span class="dv">0</span>
+  
+  <span class="cf">for</span>(i <span class="cf">in</span> <span class="kw">seq_along</span>(x)) {
+    <span class="cf">for</span>(j <span class="cf">in</span> <span class="kw">seq_along</span>(x)) {
+      
+      <span class="cf">if</span>(<span class="kw">abs</span>(x[i]<span class="op">-</span>x[j]) <span class="op">&gt;=</span><span class="st"> </span>maxDiff) {
+        maxDiff &lt;-<span class="st"> </span><span class="kw">abs</span>(x[i]<span class="op">-</span>x[j])
+      }
+  
+    }
+  } 
+  
+  <span class="kw">return</span>(maxDiff)
+}
+  
+<span class="kw">max_diff_3</span>()</code></pre></div>
+<pre><code>## [1] 18</code></pre>
+</div>
+<div id="write-a-function-that-takes-as-input-two-matrices-and-then-multiplies-them-together-using-the-rules-of-matrix-multiplication.-your-function-should-return-a-warning-if-the-input-matrices-are-not-of-the-correct-dimensions-for-matrix-multiplication.-check-the-performance-of-your-function-by-comparing-with-the-built-in-r-function-for-matrix-multiplication-." class="section level3">
+<h3>6. Write a function that takes as input two matrices, and then multiplies them together, using the rules of matrix multiplication. Your function should return a warning if the input matrices are not of the correct dimensions for matrix multiplication. Check the performance of your function by comparing with the built in R function for matrix multiplication %*%.</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">################################################################################
+<span class="co"># FUNCTION: mat_mult</span>
+<span class="co"># Performs matrix multiplication</span>
+<span class="co"># input: Two matrices</span>
+<span class="co"># output: New matrix resulting from multiplying the two input matrices</span>
+<span class="co">#-------------------------------------------------------------------------------</span>
+
+m1 &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>),<span class="dv">2</span>,<span class="dv">3</span>,<span class="dt">byrow=</span><span class="ot">TRUE</span>)
+m2 &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">7</span><span class="op">:</span><span class="dv">12</span>),<span class="dv">3</span>,<span class="dv">2</span>,<span class="dt">byrow=</span><span class="ot">TRUE</span>)
+
+mat_mult &lt;-<span class="st"> </span><span class="cf">function</span>(m1,m2) {
+  
+    m3 &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dv">0</span>,<span class="kw">nrow</span>(m1), <span class="kw">ncol</span>(m2))
+    
+    <span class="cf">if</span> (<span class="kw">nrow</span>(m1) <span class="op">!=</span><span class="st"> </span><span class="kw">ncol</span>(m2)){
+    <span class="kw">cat</span>(<span class="st">&quot;Error: input matrices are not of the correct dimensions for matrix multiplication&quot;</span>, <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)
+  } <span class="cf">else</span>{
+    <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(m1)){
+      <span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">ncol</span>(m2)){
+        x &lt;-<span class="st"> </span><span class="kw">sum</span>(m1[i,]<span class="op">*</span>m2[,j])
+        m3[i,j] =<span class="st"> </span>x
+      }
+    }
+  }
+    
+<span class="kw">return</span>(m3)
+}
+
+<span class="co"># Test the function</span>
+<span class="kw">mat_mult</span>(m1,m2)</code></pre></div>
+<pre><code>##      [,1] [,2]
+## [1,]   58   64
+## [2,]  139  154</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Compare to built-in R function</span>
+m1 <span class="op">%*%</span><span class="st"> </span>m2</code></pre></div>
+<pre><code>##      [,1] [,2]
+## [1,]   58   64
+## [2,]  139  154</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Test the function on matrices of incorrect dimensions</span>
+m1 &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>),<span class="dv">2</span>,<span class="dv">3</span>,<span class="dt">byrow=</span><span class="ot">TRUE</span>)
+m2 &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">7</span><span class="op">:</span><span class="dv">12</span>),<span class="dv">2</span>,<span class="dv">3</span>,<span class="dt">byrow=</span><span class="ot">TRUE</span>)
+<span class="kw">mat_mult</span>(m1,m2)</code></pre></div>
+<pre><code>## Error: input matrices are not of the correct dimensions for matrix multiplication</code></pre>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]    0    0    0
+## [2,]    0    0    0</code></pre>
+</div>
+<div id="write-a-function-that-takes-as-input-two-integers-representing-the-number-of-rows-and-columns-in-a-matrix.-the-output-is-a-matrix-of-these-dimensions-in-which-each-element-is-the-product-of-the-row-number-x-the-column-number." class="section level3">
+<h3>7. Write a function that takes as input two integers representing the number of rows and columns in a matrix. The output is a matrix of these dimensions in which each element is the product of the row number x the column number.</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">################################################################################
+<span class="co"># FUNCTION: mat_dim</span>
+<span class="co"># Takes two integers representing the number of rows and columns in a matrix, and creates a matrix in which each element is the product of the row number and the column number</span>
+<span class="co"># input: nrow = number of rows in a matrix, ncol = number of columns in a matrix</span>
+<span class="co"># output: Matrix of row number x column number products</span>
+<span class="co">#-------------------------------------------------------------------------------</span>
+
+mat_dim &lt;-<span class="st"> </span><span class="cf">function</span>(<span class="dt">nrow=</span><span class="dv">2</span>,<span class="dt">ncol=</span><span class="dv">3</span>) {
+  
+  m &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dv">0</span>,nrow, ncol)
+  
+  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(m)){
+      <span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">ncol</span>(m)){
+        m[i,j] =<span class="st"> </span>i<span class="op">*</span>j
+      }
+    }
+      
+<span class="kw">return</span>(m)
+}
+
+<span class="kw">mat_dim</span>()</code></pre></div>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]    1    2    3
+## [2,]    2    4    6</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Test function on a sample matrix</span>
+m1 &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>),<span class="dv">3</span>,<span class="dv">2</span>,<span class="dt">byrow=</span><span class="ot">TRUE</span>)
+x &lt;-<span class="st"> </span><span class="kw">nrow</span>(m1)
+y &lt;-<span class="st"> </span><span class="kw">ncol</span>(m1)
+<span class="kw">mat_dim</span>(x,y)</code></pre></div>
+<pre><code>##      [,1] [,2]
+## [1,]    1    2
+## [2,]    2    4
+## [3,]    3    6</code></pre>
 </div>
 </article>
 </div>
